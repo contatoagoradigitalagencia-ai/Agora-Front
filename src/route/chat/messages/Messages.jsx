@@ -49,10 +49,10 @@ export default function Messages({ socket }) {
 		);
 	}
 	return (
-		<div ref={containerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto">
+		<div className="flex-1 overflow-y-auto" ref={containerRef} onScroll={handleScroll}>
 			{loadingMore && (
 				<div className="flex items-center justify-center mt-2">
-					<div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
+					<div className="h-8 w-8 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
 				</div>
 			)}
 			{messages.map((message) => (
