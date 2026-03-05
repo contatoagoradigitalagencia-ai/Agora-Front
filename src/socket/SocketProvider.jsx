@@ -4,6 +4,11 @@ import createSocket from "./config_socket.js";
 
 export const SocketContext = createContext(null);
 
+/**
+ * @author VAMPETA
+ * @brief COMPONENTE QUE FAZ A CONEXAO COM O SOCKET
+ * @param children ELEMENTO FILHO
+*/
 export function SocketProvider({ children }) {
 	const socketRef = useRef(null);
 	const [socket, setSocket] = useState(null);
@@ -14,8 +19,9 @@ export function SocketProvider({ children }) {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const newToken = Cookies.get("token");
+
 			setToken((prev) => ((prev !== newToken) ? newToken : prev));
-		}, 500);
+		}, 2000);
 
 		return (() => clearInterval(interval));
 	}, [token]);
