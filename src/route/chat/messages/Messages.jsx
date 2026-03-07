@@ -10,6 +10,7 @@ import FooterMessage from "./FooterMessage.jsx";
 import Context from "./context/Context.jsx";
 import Text from "./Text.jsx";
 import Location from "./Location.jsx";
+import Contacts from "./Contacts.jsx";
 import Reaction from "./Reaction.jsx";
 
 /**
@@ -20,9 +21,11 @@ import Reaction from "./Reaction.jsx";
 function Message({ message }) {
 	switch (message.data.type) {
 		case "text":
-			return <Text message={message} />;
+			return (<Text message={message} />);
 		case "location":
-			return <Location message={message} />;
+			return (<Location message={message} />);
+		case "contacts":
+			return (<Contacts message={message} />);
 		default:
 			return (<p className="text-red-900"><i>Mensagem do tipo <b>{message.data.type}</b> não suportada</i></p>);
 	}

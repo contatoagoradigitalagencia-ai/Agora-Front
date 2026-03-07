@@ -30,16 +30,16 @@ function ProtectedRoute({ children }) {
 
 createRoot(document.getElementById("root")).render(
 	// <StrictMode>
-	<BrowserRouter>
-		<SocketProvider>
-			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/login" element={<Login />} />
-				<Route path="/chat" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
-				<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-				<Route path="*" element={<NotFound />} />
-			</Routes>
-		</SocketProvider>
-	</BrowserRouter>
+		<BrowserRouter>
+			<SocketProvider>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/chat" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
+					<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+					<Route path="*" element={<NotFound />} />
+				</Routes>
+			</SocketProvider>
+		</BrowserRouter>
 	// </StrictMode>
 );

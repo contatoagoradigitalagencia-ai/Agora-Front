@@ -1,16 +1,195 @@
-# React + Vite
+# 💬 Chat Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação web de chat em tempo real construída com **React**, utilizando **React Router** para navegação, **cookies** para autenticação e **WebSockets** para comunicação em tempo real.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# 🚀 Tecnologias Utilizadas
 
-## React Compiler
+* React
+* React Router DOM
+* Tailwind
+* js-cookie
+* axios
+* WebSocket / socket.io-client
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+# 📦 Instalação
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Clone o repositório:
+
+```bash
+git clone https://github.com/elguesabal/chat-WhatsApp.git
+```
+
+Entre na pasta do projeto:
+
+```bash
+cd chat-WhatsApp
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+---
+
+# ▶️ Executando o projeto
+
+Para iniciar o servidor de desenvolvimento:
+
+```bash
+npm run dev
+```
+
+A aplicação estará disponível em:
+
+```
+http://localhost:5173
+```
+
+---
+
+# 📁 Estrutura do Projeto
+
+```
+src
+│
+├── route
+│   ├── home
+│   │
+│   ├── login
+│   │
+│   ├── chats
+│   │
+│   ├── chat
+│   │
+│   └── NotFound
+│
+├── socket
+|
+├── screens
+│
+├── style
+│
+└── main.jsx
+```
+
+---
+
+# 🔀 Sistema de Rotas
+
+A navegação da aplicação é controlada utilizando **React Router DOM**.
+
+| Rota           | Página   | Descrição              |
+| -------------- | -------- | ---------------------- |
+| `/`            | Home     | Página inicial         |
+| `/login`       | Login    | Página de autenticação |
+| `/chat`        | Chats    | Lista de conversas     |
+| `/chat/:phone` | Chat     | Conversa específica    |
+| `*`            | NotFound | Página não encontrada  |
+
+---
+
+# 🔐 Autenticação
+
+A autenticação do usuário é verificada através de **cookies armazenados no navegador**.
+
+Cookies utilizados:
+
+| Cookie    | Descrição                     |
+| --------- | ----------------------------- |
+| `phone`   | Número do telefone do usuário |
+| `idPhone` | Identificador interno         |
+| `token`   | Token de autenticação         |
+
+Se qualquer um desses cookies **não existir**, o usuário será redirecionado automaticamente para `/login`.
+
+---
+
+# 🛡️ ProtectedRoute
+
+O componente `ProtectedRoute` é responsável por proteger rotas privadas da aplicação.
+
+```javascript
+function ProtectedRoute({ children }) {
+	const phone = Cookies.get("phone");
+	const idPhone = Cookies.get("idPhone");
+	const token = Cookies.get("token");
+
+	if (!phone || !idPhone || !token) return (<Navigate to="/login" replace />);
+	return (children);
+}
+```
+
+Ele garante que apenas usuários autenticados possam acessar páginas protegidas.
+
+---
+
+# 🔌 WebSocket Events (Front-End)
+
+A aplicação utiliza **WebSocket** para comunicação em tempo real entre o **Front-End** e o **Back-End**.
+
+Exemplos de uso:
+
+* Envio de mensagens instantâneas
+* Atualização automática de chats
+* Comunicação cliente-servidor em tempo real
+
+---
+
+# 🔐 Autenticação do WebSocket
+
+Para que o cliente consiga utilizar os eventos do WebSocket, é necessário que o navegador possua o cookie **`token`** ativo.
+
+Esse token é utilizado pelo servidor para **identificar e autenticar o usuário durante a conexão do socket**. A presença desse cookie garante que os eventos enviados pelo cliente estejam associados a um usuário válido.
+
+Caso o cookie **`token`** não exista ou seja inválido, o servidor pode **recusar a conexão ou ignorar os eventos enviados pelo cliente**.
+
+Portanto, antes de utilizar os eventos de WebSocket documentados neste projeto, é necessário garantir que o usuário esteja **autenticado e com o cookie `token` presente no navegador**.
+
+---
+
+# 📥 Eventos que o Front-End pode utilizar
+
+## /chat
+
+| Tipo   | Evento                | Descrição |
+| ------ | --------------------- | --------- |
+| `emit` | `chats:load_chats`    |           |
+
+---
+
+## /chat/:phone
+
+| Tipo   | Evento                | Descrição |
+| ------ | --------------------- | --------- |
+| `emit` | `chat:load_messages`  |           |
+| `emit` | `chat:reply_window`   |           |
+| `emit` | `chat:quick_messages` |           |
+| `emit` | `chat:send:text`      |           |
+| `emit` | `chat:send:location`  |           |
+| `emit` | `chat:bot:on_off`     |           |
+| `on`   | `chat:new_message`    |           |
+| `on`   | `chat:update_view`    |           |
+| `on`   | `chat:new_react`      |           |
+---
+
+# 📡 Exemplo de uso no Front-End
+
+```javascript
+socket.emit("chat:send:text", data, (response) => {
+	console.log(response);
+});
+```
+
+Escutando eventos do servidor:
+
+```javascript
+socket.on("chat:new_message", (data) => {
+	console.log(data);
+});
+```
