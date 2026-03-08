@@ -157,25 +157,26 @@ Portanto, antes de utilizar os eventos de WebSocket documentados neste projeto, 
 
 ## /chat
 
-| Tipo   | Evento                | Descrição |
-| ------ | --------------------- | --------- |
-| `emit` | `chats:load_chats`    |           |
+| Tipo   | Evento                      | Descrição                                               |
+| ------ | --------------------------- | ------------------------------------------------------- |
+| `emit` | `chats:load_chats`          | Carrega a lista de chats do usuário.                    |
+| `emit` | `chats:update_human_viewed` | Informa o back-end que o chat foi aberto por um humano. |
 
 ---
 
 ## /chat/:phone
 
-| Tipo   | Evento                | Descrição |
-| ------ | --------------------- | --------- |
-| `emit` | `chat:load_messages`  |           |
-| `emit` | `chat:reply_window`   |           |
-| `emit` | `chat:quick_messages` |           |
-| `emit` | `chat:send:text`      |           |
-| `emit` | `chat:send:location`  |           |
-| `emit` | `chat:bot:on_off`     |           |
-| `on`   | `chat:new_message`    |           |
-| `on`   | `chat:update_view`    |           |
-| `on`   | `chat:new_react`      |           |
+| Tipo   | Evento                | Descrição                                                             |
+| ------ | --------------------- | --------------------------------------------------------------------- |
+| `emit` | `chat:load_messages`  | Carrega as mensagens de um chat.                                      |
+| `emit` | `chat:reply_window`   | Verifica se a janela de resposta do WhatsApp (24h) ainda está aberta. |
+| `emit` | `chat:quick_messages` | Retorna mensagens rápidas pré-definidas.                              |
+| `emit` | `chat:send:text`      | Envia uma mensagem de texto.                                          |
+| `emit` | `chat:send:location`  | Envia uma mensagem de localização.                                    |
+| `emit` | `chat:bot:on_off`     | Consulta ou altera o estado do bot em um chat.                        |
+| `on`   | `chat:new_message`    | Atuliza o chat quando uma nova mensagem é enviada ou recebida.        |
+| `on`   | `chat:update_view`    | Atualiza o status de visualização de uma mensagem.                    |
+| `on`   | `chat:new_react`      | Atualiza o chat quando uma mensagem recebe uma reação.                |
 ---
 
 # 📡 Exemplo de uso no Front-End

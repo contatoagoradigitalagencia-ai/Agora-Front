@@ -3,6 +3,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 /**
  * @author VAMPETA
  * @brief HOOK QUE CONTROLA O LOAD DAS CONVERSAS (CURSOR COMPOSTO)
+ * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
  */
 export function useLoadChats(socket) {
 	const [chats, setChats] = useState(null);
