@@ -38,5 +38,5 @@ export function useLoadChats(socket) {
 			setLoadingMore(false);
 		});
 	}, [socket, loadingMore, hasMore]);
-	return ({ chats, error, loadMore, hasMore, loadingMore });
+	return ({ chats, setChats, error, loadMore, hasMore, loadingMore });
 }

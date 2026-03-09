@@ -2,51 +2,6 @@ import { useEffect, useState, useRef, useCallback } from "react";
 
 /**
  * @author VAMPETA
- * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA MENSAGEM
- * @param {Object} setMessages DEFINE O VALOR DE messages
- * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
-*/
-function handleNewMessage(setMessages, phone) {
-	return ((newMessage) => {
-		if (newMessage.phone !== phone) return ;
-		setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]))
-	});
-}
-
-/**
- * @author VAMPETA
- * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA VISUALIZACAO DE MENSAGEM
- * @param {Object} setMessages DEFINE O VALOR DE messages
- * @param {String} from NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
-*/
-function handleUpdateView(setMessages, from) {
-	return (({ phone, wamid, status }) => {
-		if (phone !== from) return ;
-		setMessages((prev) => {
-			if (!prev) return (prev);
-			return (prev.map((message) => (message.wamid === wamid) ? { ...message, status } : message));
-		});
-	});
-}
-
-/**
- * @author VAMPETA
- * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA REACAO DE MENSAGEM
- * @param {Object} setMessages DEFINE O VALOR DE messages
- * @param {String} from NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
-*/
-function handleNewReact(setMessages, from) {
-	return (({ phone, wamid, react }) => {
-		if (phone !== from) return ;
-		setMessages((prev) => {
-			if (!prev) return (prev);
-			return (prev.map((message) => (message.wamid === wamid) ? { ...message, react } : message));
-		});
-	});
-}
-
-/**
- * @author VAMPETA
  * @brief HOOK QUE CONTROLA O LOAD DAS MENSAGENS DO CHAT
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
  * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
@@ -69,17 +24,6 @@ export function useLoadMessages(socket, phone) {
 			setHasMore(res.hasMore);
 			cursorRef.current = res.nextCursor;
 		});
-		const onNewMessage = handleNewMessage(setMessages, phone);
-		const onUpdateView = handleUpdateView(setMessages, phone);
-		const onNewReact = handleNewReact(setMessages, phone);
-		socket.on("chat:new_message", onNewMessage);
-		socket.on("chat:update_view", onUpdateView);
-		socket.on("chat:new_react", onNewReact);
-		return (() => {
-			socket.off("messages:new_message", onNewMessage);
-			socket.off("messages:update_view", onUpdateView);
-			socket.off("messages:new_react", onNewReact);
-		})
 	}, [socket]);
 	const loadMore = useCallback(() => {
 		if (!socket || loadingMore || !hasMore) return ;
@@ -95,5 +39,5 @@ export function useLoadMessages(socket, phone) {
 			setLoadingMore(false);
 		});
 	}, [socket, loadingMore, hasMore]);
-	return ({ messages, error, loadMore, hasMore, loadingMore });
+	return ({ messages, setMessages, error, loadMore, hasMore, loadingMore });
 }

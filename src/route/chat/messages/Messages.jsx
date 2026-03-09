@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 
 import { useLoadMessages } from "./useLoadMessages.js";
 import { useScroll } from "./useScroll.js";
+import { useChatRealtime } from "./useChatRealtime.js";
 
 import Load from "../../../screens/Load.jsx";
 import Error from "../../../screens/Error.jsx";
@@ -38,8 +39,9 @@ function Message({ message }) {
 */
 export default function Messages({ socket }) {
 	const { phone } = useParams();
-	const { messages, error, loadMore, hasMore, loadingMore } = useLoadMessages(socket, phone);
+	const { messages, setMessages, error, loadMore, hasMore, loadingMore } = useLoadMessages(socket, phone);
 	const { containerRef, bottomRef, handleScroll } = useScroll({ messages, hasMore, loadingMore, loadMore });
+	useChatRealtime(socket, phone, setMessages);
 
 	if (error) return (<Error />);
 	if (messages === null) return (<Load />);

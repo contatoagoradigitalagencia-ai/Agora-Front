@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { useLoadChats } from "./useLoadChats.js";
 import { useScroll } from "./useScroll.js";
+import { useChatsRealTime } from "./useChatsRealtime.js";
 
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
@@ -10,10 +11,11 @@ import Error from "../../screens/Error.jsx";
  * @author VAMPETA
  * @brief PAGINA DE CONVERSAS
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
- * @param {Object} phone NUMERO DE WHATSAPP QUE FOI CLICADO
+ * @param {Object} chat INFORMACOES GERAIS SOBRE O CHAT
 */
-async function updateHumanViewed(socket, phone) {
-	socket.emit("chats:update_human_viewed", { phone: phone }, (res) => {});
+async function updateHumanViewed(socket, chat) {
+	if (chat.lastMessage.humanViewed) return ;
+	socket.emit("chats:update_human_viewed", { phone: chat.phone }, (res) => {});
 }
 
 /**
@@ -61,8 +63,9 @@ function TypeMessage({ type }) {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Contact({ socket }) {
-	const { chats, error, loadMore, hasMore, loadingMore } = useLoadChats(socket);
+	const { chats, setChats, error, loadMore, hasMore, loadingMore } = useLoadChats(socket);
 	const { containerRef, handleScroll } = useScroll({ hasMore, loadingMore, loadMore });
+	// useChatsRealTime(socket, setChats);
 
 	if (error) return (<Error />);
 	if (chats === null) return (<Load />);
@@ -77,7 +80,7 @@ export default function Contact({ socket }) {
 	return (
 		<div className="flex-1 overflow-y-auto" ref={containerRef} onScroll={handleScroll}>
 			{chats.map((chat) => (
-				<Link className={`w-full my-3 px-6 py-2 ${(!chat.lastMessage.humanViewed) ? "bg-gray-600" : "bg-gray-800"} text-white flex flex-col hover:bg-orange-400 transition`} key={chat._id} to={`/chat/${chat.phone}`} onClick={() => updateHumanViewed(socket, chat.phone)}>
+				<Link className={`w-full my-3 px-6 py-2 ${(!chat.lastMessage.humanViewed) ? "bg-gray-600" : "bg-gray-800"} text-white flex flex-col hover:bg-orange-400 transition`} key={chat._id} to={`/chat/${chat.phone}`} onClick={() => updateHumanViewed(socket, chat)}>
 					<div className="flex justify-between">
 						<p>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</p>
 						{!chat.lastMessage.humanViewed && <i className="bi bi-chat-left-dots" />}
