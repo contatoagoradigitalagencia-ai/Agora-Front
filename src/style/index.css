@@ -1,5 +1,35 @@
 @import "tailwindcss";
 
+@keyframes toastIn {
+	from {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes toastOut {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-20px);
+	}
+}
+
+.animate-toastIn {
+	animation: toastIn 0.3s ease-out;
+}
+
+.animate-toastOut {
+	animation: toastOut 0.2s ease-in;
+}
+
 body {
 	@apply overscroll-y-none;
 }

@@ -11,11 +11,11 @@ import { useSocket } from "../../socket/useSocket.js";
 /**
  * @author VAMPETA
  * @brief FUNCAO RESPONSAVEL POR LOGAR
- * @param phone LOGIN DO USUARIO
- * @param password SENHA DO USUARIO
- * @param setError FUNCAO DE CONTROLE DE ESTADO DE ERRO
- * @param navigate FUNCAO DE CONTROLE DE ROTA
- * @param socket CONEXAO COM O SOCKET
+ * @param {String} phone LOGIN DO USUARIO
+ * @param {String} password SENHA DO USUARIO
+ * @param {Object} setError FUNCAO DE CONTROLE DE ESTADO DE ERRO
+ * @param {Object} navigate FUNCAO DE CONTROLE DE ROTA
+ * @param {Object} socket CONEXAO COM O SOCKET
 */
 async function login(phone, password, setError, navigate, socket) {
 	try {

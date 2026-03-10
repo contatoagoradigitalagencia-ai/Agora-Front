@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Cookies from "js-cookie";
+import { Toaster } from "react-hot-toast";
 
 import "./style/index.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -30,16 +31,19 @@ function ProtectedRoute({ children }) {
 
 createRoot(document.getElementById("root")).render(
 	// <StrictMode>
-		<BrowserRouter>
-			<SocketProvider>
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/login" element={<Login />} />
-					<Route path="/chat" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
-					<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-					<Route path="*" element={<NotFound />} />
-				</Routes>
-			</SocketProvider>
-		</BrowserRouter>
+		<>
+			<Toaster position="top-center" />
+			<BrowserRouter>
+				<SocketProvider>
+					<Routes>
+						<Route path="/" element={<Home />} />
+						<Route path="/login" element={<Login />} />
+						<Route path="/chat" element={<ProtectedRoute><Chats /></ProtectedRoute>} />
+						<Route path="/chat/:phone" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
+						<Route path="*" element={<NotFound />} />
+					</Routes>
+				</SocketProvider>
+			</BrowserRouter>
+		</>
 	// </StrictMode>
 );

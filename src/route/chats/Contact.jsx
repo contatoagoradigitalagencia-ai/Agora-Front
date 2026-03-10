@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import { useLoadChats } from "./useLoadChats.js";
 import { useScroll } from "./useScroll.js";
-import { useChatsRealTime } from "./useChatsRealtime.js";
+import { useChatsRealTime } from "./useChatsRealtime.jsx";
 
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
@@ -52,6 +52,10 @@ function TypeMessage({ type }) {
 			return (<i className="bi bi-person-vcard mr-2 text-gray-400" />);
 		case "location":
 			return (<i className="bi bi-geo-alt-fill mr-2 text-red-500" />);
+		case "list":
+			return (<i className="bi bi-list-ul mr-2 text-gray-400" />);
+		case "button":
+			return (<i className="bi bi-list-ul mr-2 text-gray-400" />);
 		default:
 			return (null);
 	}
@@ -65,8 +69,8 @@ function TypeMessage({ type }) {
 export default function Contact({ socket }) {
 	const { chats, setChats, error, loadMore, hasMore, loadingMore } = useLoadChats(socket);
 	const { containerRef, handleScroll } = useScroll({ hasMore, loadingMore, loadMore });
-	useChatsRealTime(socket, setChats);
 
+	useChatsRealTime(socket, setChats);
 	if (error) return (<Error />);
 	if (chats === null) return (<Load />);
 	if (chats.length === 0) {
@@ -78,9 +82,9 @@ export default function Contact({ socket }) {
 		);
 	}
 	return (
-		<div className="flex-1 overflow-y-auto" ref={containerRef} onScroll={handleScroll}>
+		<div className="flex-1 overflow-y-auto animate-toastIn" ref={containerRef} onScroll={handleScroll}>
 			{chats.map((chat) => (
-				<Link className={`w-full my-3 px-6 py-2 ${(!chat.lastMessage.humanViewed) ? "bg-gray-600" : "bg-gray-800"} text-white flex flex-col hover:bg-orange-400 transition`} key={chat._id} to={`/chat/${chat.phone}`} onClick={() => updateHumanViewed(socket, chat)}>
+				<Link className={`flex justify-center w-full h-20 my-3 px-6 ${(!chat.lastMessage.humanViewed) ? "bg-gray-600" : "bg-gray-800"} text-white flex flex-col hover:bg-orange-400 transition`} key={chat.phone} to={`/chat/${chat.phone}`} onClick={() => updateHumanViewed(socket, chat)}>
 					<div className="flex justify-between">
 						<p>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</p>
 						{!chat.lastMessage.humanViewed && <i className="bi bi-chat-left-dots" />}

@@ -9,7 +9,7 @@ import { useEffect } from "react";
 function handleNewMessage(setMessages, phone) {
 	return ((newMessage) => {
 		if (newMessage.phone !== phone) return ;
-		setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]))
+		setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]));
 	});
 }
 
