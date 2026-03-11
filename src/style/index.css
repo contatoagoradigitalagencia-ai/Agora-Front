@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+body {
+	@apply overscroll-y-none;
+}
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #888 #1e1e1e;
+}
+
+*::-webkit-scrollbar {
+	width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+	background: #1e1e1e;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
+
+
+
 @keyframes toastIn {
 	from {
 		opacity: 0;
@@ -23,30 +51,10 @@
 }
 
 .animate-toastIn {
-	animation: toastIn 0.3s ease-out;
+	animation: toastIn 0.3s ease-out forwards;
 }
 
 .animate-toastOut {
-	animation: toastOut 0.2s ease-in;
-}
-
-body {
-	@apply overscroll-y-none;
-}
-
-::-webkit-scrollbar {
-	width: 8px;
-}
-
-::-webkit-scrollbar-track {
-	background: #1e1e1e;
-}
-
-::-webkit-scrollbar-thumb {
-	background: #888;
-	border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: #555;
+	animation: toastOut 0.2s ease-in forwards;
+	will-change: transform, opacity;
 }

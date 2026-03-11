@@ -1,0 +1,55 @@
+import toast from "react-hot-toast";
+
+/**
+ * @author VAMPETA
+ * @brief FUNCAO QUE CONTROLA O EVENTO DE CLICK DA FUNCAO
+ * @param {String} id ID DA NOTIFICACAO
+ * @param {Object} navigate FUNCAO DE CONTROLE DE ROTA
+ * @param {String} phone NUMERO QUE ENVIOU A MENSAGEM
+ */
+function clickNotify(id, navigate, phone) {
+	toast.dismiss(id);
+	navigate(`/chat/${phone}`);
+}
+
+/**
+ * @author VAMPETA
+ * @brief IDENTIFICA O TIPO DA MENSAGEM E RETORNA O TEXTO CORRETO
+ * @param {Object} data 
+ */
+function textChat(data) {
+	switch (data.type) {
+		case "text":
+			return (data.text.body);
+		case "image":
+			return ("Imagem");
+		case "video":
+			return ("Vídeo");
+		case "location":
+			return ((data.location.name) ? data.location.name : "Localização");
+		case "contacts":
+			return (data.contacts[0].name.formatted_name);
+		default:
+			return (null);
+	}
+}
+
+/**
+ * @author VAMPETA
+ * @brief COMPONENTE DE NOTIFICACAO DE MENSAGEM
+ * @param {Object} t OBJETO PASSADO COMO PARAMETRO PELA LIB toast
+ * @param {Object} newMessage NOVA MENSAGEM RECEBIDA
+ */
+export function NotifyMessage({ navigate, t, newMessage }) {
+	return (
+		<div className={`flex justify-between w-[80vw] rounded text-white bg-orange-500 ${t.visible ? "animate-toastIn" : "animate-toastOut"}`}>
+			<div className="flex flex-col w-[80%] h-full px-4 py-3 cursor-pointer" onClick={() => clickNotify(t.id, navigate, newMessage.phone)}>
+				<span>{newMessage.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</span>
+				<span className="truncate">{textChat(newMessage.data)}</span>
+			</div>
+			<button className="flex justify-center items-center w-[20%] cursor-pointer opacity-70 hover:opacity-100" onClick={() => toast.dismiss(t.id)}>
+				<i className="bi bi-x-square text-4xl"/>
+			</button>
+		</div>
+	);
+}

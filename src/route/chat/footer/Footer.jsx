@@ -1,5 +1,3 @@
-import { useParams } from "react-router-dom";
-
 import { useReplyWindow } from "./useReplyWindow.js";
 
 import ChatComposer from "./chatComposer/ChatComposer.jsx";
@@ -22,8 +20,7 @@ function OutsideResponseWindow() {
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Footer({ socket }) {
-	const { phone } = useParams();
-	const { replyWindow } = useReplyWindow(socket, phone);
+	const { replyWindow } = useReplyWindow(socket);
 
 	switch (replyWindow) {
 		case null:

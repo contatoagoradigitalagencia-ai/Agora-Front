@@ -2,9 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 
+import { NotifyMessage } from "./NotifyMessage.jsx";
+
 /**
  * @author VAMPETA
- * @brief 
+ * @brief IDENTIFICA O TIPO DA MENSAGEM E RETORNA O TEXTO CORRETO
  * @param {Object} data 
  */
 function textChat(data) {
@@ -31,7 +33,7 @@ function textChat(data) {
  * @param {Object} navigate FUNCAO DE CONTROLE DE ROTA
  */
 function handleNewMessage(setChats, navigate) {
-	return (newMessage) => {
+	return ((newMessage) => {
 		setChats((prev) => {
 			const index = prev.findIndex((chat) => (chat.phone === newMessage.phone));
 			if (index === -1) return (prev);
@@ -51,18 +53,14 @@ function handleNewMessage(setChats, navigate) {
 			return (newChats);
 		});
 		toast.custom(
-			(t) => (
-				<div className={`flex flex-col w-[80vw] px-4 py-3 rounded text-white bg-orange-500 cursor-pointer ${t.visible ? "animate-toastIn" : "animate-toastOut"}`} to={`/chat/${newMessage.phone}`} onClick={() => { toast.dismiss(t.id), navigate(`/chat/${newMessage.phone}`) }}>
-					<span>{newMessage.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</span>
-					<span>{textChat(newMessage.data)}</span>
-				</div>
-			),
+			(t) => (<NotifyMessage navigate={navigate} t={t} newMessage={newMessage} />),
 			{
 				duration: 5000,
-				id: newMessage.phone
+				id: newMessage.phone,
+				removeDelay: 200
 			}
 		);
-	};
+	});
 }
 
 /**

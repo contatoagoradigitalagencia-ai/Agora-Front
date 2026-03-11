@@ -157,10 +157,11 @@ Portanto, antes de utilizar os eventos de WebSocket documentados neste projeto, 
 
 ## /chat
 
-| Tipo   | Evento                      | Descrição                                               |
-| ------ | --------------------------- | ------------------------------------------------------- |
-| `emit` | `chats:load_chats`          | Carrega a lista de chats do usuário.                    |
-| `emit` | `chats:update_human_viewed` | Informa o back-end que o chat foi aberto por um humano. |
+| Tipo   | Evento                      | Descrição                                                                                  |
+| ------ | --------------------------- | ------------------------------------------------------------------------------------------ |
+| `emit` | `chats:load_chats`          | Carrega a lista de chats do usuário.                                                       |
+| `emit` | `chats:update_human_viewed` | Informa o back-end que o chat foi aberto por um humano.                                    |
+| `on`   | `chat:new_message`          | Atuliza a lista de conversas, aplica estilização de mensagem não lida e exibe notificação. |
 
 ---
 
