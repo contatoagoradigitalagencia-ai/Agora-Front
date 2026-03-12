@@ -5,11 +5,13 @@ import { useEffect } from "react";
  * @brief FUNCAO QUE CONTROLA O COMPORTAMENTO DE QUANDO CHEGA NOVA MENSAGEM
  * @param {Object} setMessages DEFINE O VALOR DE messages
  * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
+ * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
-function handleNewMessage(setMessages, phone) {
+function handleNewMessage(setMessages, phone, socket) {
 	return ((newMessage) => {
 		if (newMessage.phone !== phone) return ;
 		setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]));
+		socket.emit("chats:update_human_viewed", { phone: newMessage.phone }, (res) => {});
 	});
 }
 
@@ -54,7 +56,7 @@ function handleNewReact(setMessages, from) {
 */
 export function useChatRealtime(socket, phone, setMessages) {
 	useEffect(() => {
-		const onNewMessage = handleNewMessage(setMessages, phone);
+		const onNewMessage = handleNewMessage(setMessages, phone, socket);
 		const onUpdateView = handleUpdateView(setMessages, phone);
 		const onNewReact = handleNewReact(setMessages, phone);
 		socket.on("chat:new_message", onNewMessage);
