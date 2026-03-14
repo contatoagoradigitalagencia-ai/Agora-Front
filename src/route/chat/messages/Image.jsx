@@ -11,7 +11,7 @@ function formattedText(text) {
 		{ regex: /`([^`]+)`/g, type: "code" },
 		{ regex: /\*([^*]+)\*/g, type: "bold" },
 		{ regex: /_([^_]+)_/g, type: "italic" },
-		{ regex: /~([^~]+)~/g, type: "strike" },
+		{ regex: /~([^~]+)~/g, type: "strike" }
 	];
 	let parts = [text];
 
