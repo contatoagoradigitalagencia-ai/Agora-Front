@@ -2,23 +2,23 @@ import { useState, useEffect } from "react";
 
 /**
  * @author VAMPETA
- * @brief HOOK DE CONTROLE DO BOTAO DE FULLSCREEN
+ * @brief HOOK QUE DEIXA IMAGEM OU VIDEO EM MODO TELA CHEIA
 */
 export function useFullscreen() {
 	const [isFullscreen, setIsFullscreen] = useState(false);
-	const getFullscreenElement = () => (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
-	const enterFullscreen = () => {
-		const element = document.documentElement;
-		const request = element.requestFullscreen || element.webkitRequestFullscreen || element.mozRequestFullScreen || element.msRequestFullscreen;
-		if (request) request.call(element);
+	const getFullscreenElement = () => document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement;
+	const enterFullscreen = (element) => {
+		const el = element || document.documentElement;
+		const request = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen;
+		if (request) request.call(el);
 	};
 	const exitFullscreen = () => {
 		const exit = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
 		if (exit) exit.call(document);
 	};
-	const toggleFullscreen = () => {
+	const toggleFullscreen = (element) => {
 		if (!getFullscreenElement()) {
-			enterFullscreen();
+			enterFullscreen(element);
 		} else {
 			exitFullscreen();
 		}

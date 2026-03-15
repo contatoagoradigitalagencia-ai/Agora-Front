@@ -1,4 +1,6 @@
-import { memo } from "react";
+import { memo, useState, useRef } from "react";
+
+import { useFullscreen } from "./useFullScreen.js";
 
 /**
  * @author VAMPETA
@@ -61,18 +63,21 @@ function formattedText(text) {
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 const Image = memo(function Image({ message }) {
+	const [imageError, setImageError] = useState(false);
+	const imgRef = useRef(null);
+	const { toggleFullscreen } = useFullscreen();
+
 	return (
 		<div>
-			{/* <img className="w-full h-auto rounded" src="https://videos.cults3d.com/exx8QiaBk2sGOI8m1L2CQUCnOKI=/516x516/filters:no_upscale():still()/https://fbi.cults3d.com/uploaders/45198527/illustration-file/1584c4b3-5beb-4598-a566-4d6e09bcf90f/62a09a0d6bf4375bfd3a30635d252f1c.gif" alt="" /> */}
-			{/* <img className="w-full h-auto rounded" src="https://static.wikia.nocookie.net/dota2_gamepedia/images/d/d9/Pudgeloree.jpg" alt="" /> */}
-			{/* <img className="w-full h-auto rounded" src="https://wallpapers.com/images/thumbnail/android-dota-2-background-1080-x-1920-o5581h2mowi9e68j.webp" alt="" /> */}
-
-			<div className="flex flex-col items-center p-20 bg-gray-300 rounded">
-				<i className="bi bi-wrench text-4xl" />
-				<p>Em produção</p>
-			</div>
-
-			<p>{formattedText(message.data.image.caption)}</p>
+			{(!imageError && message.data.image.url) ? (
+				<img className="w-full h-auto rounded" ref={imgRef} src={message.data.image.url} alt="Imagem da mensagem" onError={() => setImageError(true)} onClick={() => toggleFullscreen(imgRef.current)} />
+			) : (
+				<div className="flex flex-col items-center p-20 bg-gray-300 rounded">
+					<i className="bi bi-image text-4xl" />
+					<p>Imagem não disponível</p>
+				</div>
+			)}
+			{message?.data?.image?.caption && <p>{formattedText(message.data.image.caption)}</p>}
 		</div>
 	);
 });
