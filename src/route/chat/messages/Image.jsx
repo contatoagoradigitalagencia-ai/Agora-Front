@@ -69,8 +69,8 @@ const Image = memo(function Image({ message }) {
 
 	return (
 		<div>
-			{(!imageError && message.data.image.url) ? (
-				<img className="w-full h-auto rounded" ref={imgRef} src={message.data.image.url} alt="Imagem da mensagem" onError={() => setImageError(true)} onClick={() => toggleFullscreen(imgRef.current)} />
+			{(!imageError && (message.direction === "outbound") ? message.data.image.link : message.data.image.url) ? (
+				<img className="w-full h-auto rounded" ref={imgRef} src={(message.direction === "outbound") ? message.data.image.link : message.data.image.url} alt="Imagem da mensagem" onError={() => setImageError(true)} onClick={() => toggleFullscreen(imgRef.current)} />
 			) : (
 				<div className="flex flex-col items-center p-20 bg-gray-300 rounded">
 					<i className="bi bi-image text-4xl" />

@@ -44,6 +44,8 @@ function formatDate(timestamp) {
 */
 function TypeMessage({ type }) {
 	switch (type) {
+		case "audio":
+			return (<i className="bi bi-volume-up mr-2 text-gray-400" />);
 		case "image":
 			return (<i className="bi bi-image mr-2 text-gray-400" />);
 		case "video":

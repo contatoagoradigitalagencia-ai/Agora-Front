@@ -10,6 +10,7 @@ import Error from "../../../screens/Error.jsx";
 import FooterMessage from "./FooterMessage.jsx";
 import Context from "./context/Context.jsx";
 import Text from "./Text.jsx";
+import Audio from "./Audio.jsx";
 import Image from "./Image.jsx";
 import Video from "./Video.jsx";
 import Location from "./Location.jsx";
@@ -25,6 +26,8 @@ function Message({ message }) {
 	switch (message.data.type) {
 		case "text":
 			return (<Text message={message} />);
+		case "audio":
+			return (<Audio message={message} />);
 		case "image":
 			return (<Image message={message} />);
 		case "Video":
