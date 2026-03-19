@@ -71,7 +71,7 @@ const Image = memo(function Image({ message }) {
 	return (
 		<div>
 			{(!imageError && src) ? (
-				<img className="w-full h-auto rounded" ref={imgRef} src={src} alt="Imagem da mensagem" onError={() => setImageError(true)} onClick={() => toggleFullscreen(imgRef.current)} />
+				<img className="w-full h-auto rounded" ref={imgRef} src={src} loading="lazy" alt="Imagem da mensagem" onError={() => setImageError(true)} onClick={() => toggleFullscreen(imgRef.current)} />
 			) : (
 				<div className="flex flex-col items-center p-20 bg-gray-300 rounded">
 					<i className="bi bi-image text-4xl" />

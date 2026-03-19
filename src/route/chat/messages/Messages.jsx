@@ -16,6 +16,7 @@ import Video from "./Video.jsx";
 import Location from "./Location.jsx";
 import Contacts from "./Contacts.jsx";
 import Reaction from "./Reaction.jsx";
+import Document from "./document.jsx";
 
 /**
  * @author VAMPETA
@@ -36,6 +37,8 @@ function Message({ message }) {
 			return (<Location message={message} />);
 		case "contacts":
 			return (<Contacts message={message} />);
+		case "document":
+			return (<Document message={message} />);
 		default:
 			return (<p className="text-red-900"><i>Mensagem do tipo <b>{message.data.type}</b> não suportada</i></p>);
 	}

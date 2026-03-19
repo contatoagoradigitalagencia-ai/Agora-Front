@@ -1,7 +1,5 @@
 import { memo } from "react";
 
-import axios from "axios";
-
 import { usePlayer } from "./usePlayer.js";
 
 /**
@@ -75,6 +73,7 @@ function toggleSpeed(audioRef, playbackRate, setPlaybackRate) {
 */
 async function download(url) {
 	// AINDA NAO FEITO
+	alert("ainda tenho que terminar isso");
 }
 
 /**
@@ -104,12 +103,12 @@ const Audio = memo(function Audio({ message }) {
 					{`${formatTime(currentTime)}/${formatTime(duration)}`}
 				</div>
 			</div>
-			<button className="w-12 h-10 bg-gray-400 text-white cursor-pointer rounded" onClick={() => toggleSpeed(audioRef, playbackRate, setPlaybackRate)}>
+			<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => toggleSpeed(audioRef, playbackRate, setPlaybackRate)}>
 				{playbackRate}x
 			</button>
-			{/* <button className="w-12 h-10 bg-gray-400 text-white cursor-pointer rounded" onClick={() => download(src)}>
+			<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => download(src)}>
 				<i className="bi bi-download text-xl" />
-			</button> */}
+			</button>
 		</div>
 	);
 });
