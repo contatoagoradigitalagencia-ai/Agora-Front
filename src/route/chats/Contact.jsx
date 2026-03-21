@@ -44,22 +44,24 @@ function formatDate(timestamp) {
 */
 function TypeMessage({ type }) {
 	switch (type) {
+		case "sticker":
+			return (<i className="bi bi-subtract mr-2 text-orange-500" />);
 		case "audio":
-			return (<i className="bi bi-mic-fill mr-2 text-orange-400" />);
+			return (<i className="bi bi-mic-fill mr-2 text-orange-500" />);
 		case "image":
-			return (<i className="bi bi-image mr-2 text-orange-400" />);
+			return (<i className="bi bi-image mr-2 text-orange-500" />);
 		case "video":
-			return (<i className="bi bi-film mr-2 text-orange-400" />);
+			return (<i className="bi bi-film mr-2 text-orange-500" />);
 		case "location":
 			return (<i className="bi bi-geo-alt-fill mr-2 text-orange-500" />);
 		case "contacts":
-			return (<i className="bi bi-person-vcard mr-2 text-orange-400" />);
+			return (<i className="bi bi-person-vcard mr-2 text-orange-500" />);
 		case "document":
-			return (<i className="bi bi-file-earmark-text mr-2 text-orange-400" />);
+			return (<i className="bi bi-file-earmark-text mr-2 text-orange-500" />);
 		case "list":
-			return (<i className="bi bi-list-ul mr-2 text-orange-400" />);
+			return (<i className="bi bi-list-ul mr-2 text-orange-500" />);
 		case "button":
-			return (<i className="bi bi-list-ul mr-2 text-orange-400" />);
+			return (<i className="bi bi-list-ul mr-2 text-orange-500" />);
 		default:
 			return (null);
 	}

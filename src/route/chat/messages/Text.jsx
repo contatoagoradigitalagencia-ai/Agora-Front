@@ -1,6 +1,6 @@
 import { memo, useMemo } from "react";
 
-import { formattedText } from "../../../utils/formattedString.jsx";
+import { formattedText } from "../../../utils/components/formattedString.jsx";
 
 /**
  * @author VAMPETA

@@ -28,13 +28,14 @@ async function login(phone, password, setError, navigate, socket) {
 				password: password
 			}
 		});
+
 		if (res.status !== 200) return ;
 		const { idPhone, token } = res.data;
 		if (!idPhone || !token) return ;
 		Cookies.set("phone", phone, { expires: 7, path: "/", sameSite: "Strict" });
 		Cookies.set("idPhone", idPhone, { expires: 7, path: "/", sameSite: "Strict" });
 		Cookies.set("token", token, { expires: 7, path: "/", sameSite: "Strict" });
-		navigate(`/chat`);
+		navigate(`/dashboard`);
 	} catch (error) {
 		setError("Usuário ou senha incorretos");
 	}
@@ -56,11 +57,10 @@ export default function Login() {
 		const timer = setTimeout(() => setError(""), 3000);
 		return (() => clearTimeout(timer));
 	}, [error]);
-
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-black text-white px-4">
+		<div className="flex items-center justify-center h-dvh bg-black text-white px-4">
 			<div className="w-full max-w-sm bg-zinc-900 p-6 rounded-2xl shadow-lg">
-				<h1 className="text-2xl font-semibold text-center mb-6">Login</h1>
+				<h1 className="text-2xl text-center mb-6">Login</h1>
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-col">
 						<label className="mb-1 text-sm text-zinc-400">Telefone</label>

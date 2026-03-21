@@ -2,7 +2,7 @@ import { memo, useMemo, useState, useRef } from "react";
 
 import { useFullscreen } from "./useFullScreen.js";
 
-import { formattedText } from "../../../utils/formattedString.jsx";
+import { formattedText } from "../../../utils/components/formattedString.jsx";
 
 /**
  * @author VAMPETA

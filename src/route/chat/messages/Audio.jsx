@@ -2,7 +2,7 @@ import { memo } from "react";
 
 import { usePlayer } from "./usePlayer.js";
 
-import { download } from "../../../utils/download.js";
+import { download } from "../../../utils/functions/download.js";
 
 /**
  * @author VAMPETA

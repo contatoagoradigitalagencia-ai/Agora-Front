@@ -12,7 +12,7 @@ import Contact from "./Contact.jsx";
 export default function Chats() {
 	const { socket, connected, error } = useSocket();
 
-	if (!socket) return (<Load />);			// TEM QUE ARRUMAR
+	if (!socket) return (<Load />);
 	return (
 		<div className="h-dvh flex flex-col bg-black overflow-hidden">
 			<Header />

@@ -13,9 +13,9 @@ import Footer from "./footer/Footer.jsx"
 export default function Chat() {
 	const { socket, connected, error } = useSocket();
 
-	if (!socket) return (<Load />);			// TEM QUE ARRUMAR
+	if (!socket) return (<Load />);
 	return (
-		<div className="h-dvh flex flex-col bg-black overflow-hidden">
+		<div className="flex flex-col h-dvh bg-black overflow-hidden">
 			<Header socket={socket} />
 			{!connected && !error && <Load />}
 			{connected && <Messages socket={socket} />}

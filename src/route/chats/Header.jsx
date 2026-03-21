@@ -1,19 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
-import { useFullscreen } from "./useFullscreen";
+import { useFullscreen } from "../../utils/hooks/useFullscreen.js";
 
-/**
- * @author VAMPETA
- * @brief PAGINA DE CONVERSAS
- * @param navigate FUNCAO DE NAVEGACAO DE ROTA
-*/
-function logout(navigate) {
-	Cookies.remove("phone", { path: "/" });
-	Cookies.remove("idPhone", { path: "/" });
-	Cookies.remove("token", { path: "/" });
-	navigate("/login");
-}
+import { logout } from "../../utils/functions/logout.js";
 
 /**
  * @author VAMPETA

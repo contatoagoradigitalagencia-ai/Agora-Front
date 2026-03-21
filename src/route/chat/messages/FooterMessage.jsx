@@ -23,13 +23,22 @@ function formatDate(timestamp) {
  * @param {String} status STATUS DE VISUALIZACAO DA MENSAGEM
 */
 function Visualization({ status }) {
-	if (status === "sending") return (<i className="bi bi-clock ml-2 leading-none text-xs text-gray-700"/>);
-	if (status === "sent") return (<i className="bi bi-check ml-2 leading-none text-xl text-gray-700"/>);
-	if (status === "delivered") return (<i className="bi bi-check-all ml-2 leading-none text-xl text-gray-700"/>);
-	if (status === "read") return (<i className="bi bi-check-all ml-2 leading-none text-xl text-blue-700"/>);
-	if (status === "played") return (<i className="bi bi-check-all ml-2 leading-none text-xl text-blue-700"/>);
-	if (status === "failed") return (<i className="bi bi-exclamation-triangle-fill ml-2 leading-none text-xl text-yellow-500"/>);
-	return (<i className="bi bi-x-circle-fill ml-2 leading-none text-xl text-red-500"/>);
+	switch (status) {
+		case "sending":
+			return (<i className="bi bi-clock ml-2 leading-none text-xs text-gray-700"/>);
+		case "sent":
+			return (<i className="bi bi-check ml-2 leading-none text-xl text-gray-700"/>);
+		case "delivered":
+			return (<i className="bi bi-check-all ml-2 leading-none text-xl text-gray-700"/>);
+		case "read":
+			return (<i className="bi bi-check-all ml-2 leading-none text-xl text-blue-700"/>);
+		case "played":
+			return (<i className="bi bi-check-all ml-2 leading-none text-xl text-blue-700"/>);
+		case "failed":
+			return (<i className="bi bi-exclamation-triangle-fill ml-2 leading-none text-xl text-yellow-500"/>);
+		default:
+			return (<i className="bi bi-x-circle-fill ml-2 leading-none text-xl text-red-500"/>);
+	}
 }
 
 /**

@@ -78,7 +78,7 @@ export default function Messages({ socket }) {
 			{messages.map((message) => (
 				<div key={message.wamid} id={message.wamid} className={`flex ${message.direction === "outbound" ? "justify-end" : "justify-start"}`} >
 					<div className="inline-block relative bg-gray-400 m-4 px-3 py-2 rounded max-w-[80%] break-words whitespace-pre-wrap">
-						{message.context && <Context message={message} phone={socket.auth.phone} />}
+						{message.context && <Context message={message} />}
 						<>
 							<Message message={message} />
 							<FooterMessage message={message} />

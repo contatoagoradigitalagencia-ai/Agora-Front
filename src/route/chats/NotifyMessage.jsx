@@ -19,6 +19,8 @@ function clickNotify(id, navigate, phone) {
 */
 function IconeChat({ type }) {
 	switch (type) {
+		case "sticker":
+			return (<i className="bi bi-subtract mr-2 text-white" />);
 		case "audio":
 			return (<i className="bi bi-mic-fill mr-2 text-white" />);
 		case "image":
@@ -49,6 +51,8 @@ function textChat(data) {
 	switch (data.type) {
 		case "text":
 			return (data.text.body);
+		case "sticker":
+			return ("Figurinha");
 		case "audio":
 			return ("Áudio");
 		case "image":

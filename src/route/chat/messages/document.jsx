@@ -1,8 +1,8 @@
 import { memo, useMemo } from "react";
 
 import { useGetFileInfo } from "./useGetFileInfo.js";
-import { download } from "../../../utils/download.js";
-import { formattedText } from "../../../utils/formattedString.jsx";
+import { download } from "../../../utils/functions/download.js";
+import { formattedText } from "../../../utils/components/formattedString.jsx";
 
 /**
  * @author VAMPETA

@@ -6,7 +6,7 @@ import axios from "axios";
  * @param {String} url LINK DE DOWNLOAD
  * @param {String} filename NOME DO ARQUIVO
 */
-export async function download(url, filename) {
+export async function download(url, filename) {				// EU PODERIA USAR toast PARA INDICAR QUE O DOWNLOAD COMECOU
 	try {
 		const res = await axios({
 			url: url,

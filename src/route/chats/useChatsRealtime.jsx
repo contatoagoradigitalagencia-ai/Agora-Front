@@ -13,6 +13,8 @@ function textChat(data) {
 	switch (data.type) {
 		case "text":
 			return (data.text.body);
+		case "sticker":
+			return ("Figurinha");
 		case "audio":
 			return ("Áudio");
 		case "image":
