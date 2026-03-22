@@ -7,7 +7,7 @@ import { NotifyMessage } from "./NotifyMessage.jsx";
 /**
  * @author VAMPETA
  * @brief IDENTIFICA O TIPO DA MENSAGEM E RETORNA O TEXTO CORRETO
- * @param {Object} data 
+ * @param {Object} data CONTEUDO DA MENSAGEM
  */
 function textChat(data) {
 	switch (data.type) {

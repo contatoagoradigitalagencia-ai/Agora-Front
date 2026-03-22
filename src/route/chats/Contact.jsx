@@ -88,9 +88,9 @@ export default function Contact({ socket }) {
 		);
 	}
 	return (
-		<div className="flex-1 overflow-y-auto animate-toastIn" ref={containerRef} onScroll={handleScroll}>
+		<div className="flex-1 overflow-y-auto px-1 animate-toastIn" ref={containerRef} onScroll={handleScroll}>
 			{chats.map((chat) => (
-				<Link className={`flex justify-center w-full h-20 my-3 px-6 ${(!chat.lastMessage.humanViewed) ? "bg-gray-600" : "bg-gray-800"} text-white flex flex-col hover:bg-orange-400 transition`} key={chat.phone} to={`/chat/${chat.phone}`} onClick={() => updateHumanViewed(socket, chat)}>
+				<Link className={`flex justify-center w-full h-20 my-3 px-6 ${(!chat.lastMessage.humanViewed) ? "bg-zinc-600" : "bg-zinc-900"} rounded border border-zinc-800 text-white flex flex-col hover:bg-orange-600 transition`} key={chat.phone} to={`/chat/${chat.phone}`} onClick={() => updateHumanViewed(socket, chat)}>
 					<div className="flex justify-between">
 						<p>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</p>
 						{!chat.lastMessage.humanViewed && <i className="bi bi-chat-left-dots" />}
