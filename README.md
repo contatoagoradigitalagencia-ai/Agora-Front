@@ -155,6 +155,14 @@ Portanto, antes de utilizar os eventos de WebSocket documentados neste projeto, 
 
 # 📥 Eventos que o Front-End pode utilizar
 
+## /dashboard
+
+| Tipo   | Evento                      | Descrição                                                                                  |
+| ------ | --------------------------- | ------------------------------------------------------------------------------------------ |
+| `emit` | `dashboard:info`            | Solicita métricas do usuário com base na data enviada.                                     |
+
+---
+
 ## /chat
 
 | Tipo   | Evento                      | Descrição                                                                                  |
