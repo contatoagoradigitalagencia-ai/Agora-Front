@@ -4,28 +4,6 @@ html, body {
 	overscroll-behavior: none;
 }
 
-/* * {
-	scrollbar-width: thin;
-	scrollbar-color: #888 #1e1e1e;
-}
-
-*::-webkit-scrollbar {
-	width: 8px;
-}
-
-*::-webkit-scrollbar-track {
-	background: #1e1e1e;
-}
-
-*::-webkit-scrollbar-thumb {
-	background: #888;
-	border-radius: 10px;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-	background: #555;
-} */
-
 * {
 	-ms-overflow-style: none;
 	scrollbar-width: none;
@@ -67,7 +45,7 @@ html, body {
 }
 
 @layer utilities {
-	@keyframes slideIn {
+	@keyframes slideInLeft {
 		from {
 			transform: translateX(-100%);
 		}
@@ -75,7 +53,21 @@ html, body {
 			transform: translateX(0);
 		}
 	}
-	.animate-slideIn {
-		animation: slideIn 0.2s ease-out;
+	.animate-slideInLeft {
+		animation: slideInLeft 0.2s ease-out;
+	}
+}
+
+@layer utilities {
+	@keyframes slideInRight {
+		from {
+			transform: translateX(100%);
+		}
+		to {
+			transform: translateX(0);
+		}
+	}
+	.animate-slideInRight {
+		animation: slideInRight 0.2s ease-out;
 	}
 }

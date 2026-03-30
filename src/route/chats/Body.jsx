@@ -4,6 +4,8 @@ import { useLoadChats } from "./useLoadChats.js";
 import { useScroll } from "./useScroll.js";
 import { useChatsRealTime } from "./useChatsRealtime.jsx";
 
+import { formatDate } from "../../utils/functions/formatDate.js";
+
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
 
@@ -16,25 +18,6 @@ import Error from "../../screens/Error.jsx";
 async function updateHumanViewed(socket, chat) {
 	if (chat.lastMessage.humanViewed) return ;
 	socket.emit("chats:update_human_viewed", { phone: chat.phone }, (res) => {});
-}
-
-/**
- * @author VAMPETA
- * @brief CONVERTE A DATA TIMESTAMP PARA STRING NO FORMATO "dd/mm/aaaa hh:mm"
- * @param {String} timestamp DATA A SER CONVERTIDA
- * @return {String} DATA E HORA FORMATADA
-*/
-function formatDate(timestamp) {
-	if (!timestamp) return ("");
-	return (new Date(timestamp).toLocaleString("pt-BR", {
-		timeZone: "America/Sao_Paulo",
-		day: "2-digit",
-		month: "2-digit",
-		year: "numeric",
-		hour: "2-digit",
-		minute: "2-digit",
-		hour12: false
-	}));
 }
 
 /**
@@ -81,7 +64,7 @@ export default function Body({ socket }) {
 	if (chats === null) return (<Load />);
 	if (chats.length === 0) {
 		return (
-			<div className="flex-1 overflow-y-auto flex flex-col items-center justify-center">
+			<div className="flex flex-col items-center justify-center flex-1 overflow-y-auto">
 				<i className="bi bi-chat-right-text text-white text-5xl" />
 				<p className="text-white">Nenhum histórico de conversa</p>
 			</div>

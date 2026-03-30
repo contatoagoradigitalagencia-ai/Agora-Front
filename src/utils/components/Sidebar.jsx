@@ -85,7 +85,7 @@ export function SideBar({ open, setOpen }) {
 			{open && (
 				<div className="fixed inset-0 z-50 flex">
 					<div className="absolute inset-0 bg-black/60" onClick={() => setOpen(false)} />
-					<aside className="relative w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col justify-between animate-slideIn">
+					<aside className="relative w-64 bg-zinc-900 border-r border-zinc-800 flex flex-col justify-between animate-slideInLeft">
 						<SidebarContent navigate={navigate} close={() => setOpen(false)} />
 					</aside>
 				</div>
@@ -102,11 +102,11 @@ export function SideBar({ open, setOpen }) {
 */
 export function Header({ setOpen, title }) {
 	return (
-		<header className="flex justify-between items-center px-4 md:px-6 py-4 border-b border-zinc-800">
+		<header className="flex items-center px-4 md:px-6 py-4 border-b border-zinc-800">
 			<button className="md:hidden" onClick={() => setOpen(true)}>
 				<i className="bi bi-list text-3xl" />
 			</button>
-			<h1 className="text-lg md:text-xl font-semibold">{title}</h1>
+			<h1 className="flex-1 text-center text-lg md:text-xl font-semibold md:text-start">{title}</h1>
 		</header>
 	);
 }
