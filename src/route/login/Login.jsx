@@ -46,8 +46,8 @@ async function login(phone, password, setError, navigate, socket) {
  * @brief PAGINA DE LOGIN
 */
 export default function Login() {
-	const [phone, setPhone] = useState("21998869425");
-	const [password, setPassword] = useState("123");
+	const [phone, setPhone] = useState("");
+	const [password, setPassword] = useState("");
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
 	const socket = useSocket();

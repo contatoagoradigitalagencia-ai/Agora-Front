@@ -157,9 +157,9 @@ Portanto, antes de utilizar os eventos de WebSocket documentados neste projeto, 
 
 ## /dashboard
 
-| Tipo   | Evento                      | Descrição                                                                                  |
-| ------ | --------------------------- | ------------------------------------------------------------------------------------------ |
-| `emit` | `dashboard:info`            | Solicita métricas do usuário com base na data enviada.                                     |
+| Tipo   | Evento                      | Descrição                                              |
+| ------ | --------------------------- | ------------------------------------------------------ |
+| `emit` | `dashboard:info`            | Solicita métricas do usuário com base na data enviada. |
 
 ---
 
@@ -187,6 +187,14 @@ Portanto, antes de utilizar os eventos de WebSocket documentados neste projeto, 
 | `on`   | `chat:new_message`          | Atuliza o chat quando uma nova mensagem é enviada ou recebida.                     |
 | `on`   | `chat:update_view`          | Atualiza o status de visualização de uma mensagem.                                 |
 | `on`   | `chat:new_react`            | Atualiza o chat quando uma mensagem recebe uma reação.                             |
+---
+
+## /contacts
+
+| Tipo   | Evento                   | Descrição                                          |
+| ------ | ------------------------ | -------------------------------------------------- |
+| `emit` | `contacts:load_contacts` | Carrega os contatos para serem exibidos na página. |
+| `emit` | `contacts:save_comment`  | Salva o comentário em um contato.                  |
 ---
 
 # 📡 Exemplo de uso no Front-End
