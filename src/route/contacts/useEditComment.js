@@ -23,9 +23,11 @@ export function useEditComment(contact) {
  * @param {String} phone NUMERO DO CONTATO
  * @param {String} comment COMENTARIO QUE SERA SALVO
  * @param {Object} setEditing FUNCAO DE CONTROLE DA VARIAVEL editing
+ * @param {Object} setContact FUNCAO DE CONTROLE DA VARIAVEL contact
  */
-export function handleSave(socket, phone, comment, setEditing) {
+export function handleSave(socket, phone, comment, setEditing, setContact) {
 	socket.emit("contacts:save_comment", { phone: phone, comment: comment }, (res) => {
+		if (res === 200) setContact((prev) => ({ ...prev, comment: comment }));
 		setEditing(false);
 	});
 }

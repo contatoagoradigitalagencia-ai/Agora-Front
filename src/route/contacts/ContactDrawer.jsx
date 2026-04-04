@@ -9,9 +9,10 @@ import { formatDate } from "../../utils/functions/formatDate.js";
  * @brief COMPONENTE COM DETALHES DO CONTATO
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
  * @param {Objetc} contact INFORMACOES DO CONTATO
+ * @param {Object} setContact FUNCAO DE CONTROLE DA VARIAVEL contact
  * @param {Objetc} onClose FUNCAO DE FECHAMENTO DO DROWER
  */
-export default function ContactDrawer({ socket, contact, onClose }) {
+export default function ContactDrawer({ socket, contact, setContact, onClose }) {
 	const { editing, setEditing, comment, setComment } = useEditComment(contact);
 
 	if (!contact) return (null);
@@ -44,7 +45,7 @@ export default function ContactDrawer({ socket, contact, onClose }) {
 							<>
 								<textarea className="w-full p-2 text-sm bg-zinc-900 border border-zinc-700 rounded-lg focus:outline-none focus:border-orange-500 resize-none" value={comment} onChange={(e) => setComment(e.target.value)} rows={4} />
 								<div className="flex gap-2">
-									<button className="flex-1 bg-orange-500 text-black py-1.5 rounded-lg hover:bg-orange-400 transition" onClick={() => handleSave(socket, contact.phone, comment, setEditing)}>
+									<button className="flex-1 bg-orange-500 text-black py-1.5 rounded-lg hover:bg-orange-400 transition" onClick={() => handleSave(socket, contact.phone, comment, setEditing, setContact)}>
 										Salvar
 									</button>
 									<button className="flex-1 bg-zinc-700 py-1.5 rounded-lg hover:bg-zinc-600 transition"

@@ -184,6 +184,8 @@ Portanto, antes de utilizar os eventos de WebSocket documentados neste projeto, 
 | `emit` | `chat:send:text`            | Envia uma mensagem de texto.                                                       |
 | `emit` | `chat:send:location`        | Envia uma mensagem de localização.                                                 |
 | `emit` | `chat:bot:on_off`           | Consulta ou altera o estado do bot em um chat.                                     |
+| `emit` | `chat:info_contact`         | Consulta os dados de um contato.                                                   |
+| `emit` | `contacts:save_comment`     | Salva o comentário de um contato.                                                  |
 | `on`   | `chat:new_message`          | Atuliza o chat quando uma nova mensagem é enviada ou recebida.                     |
 | `on`   | `chat:update_view`          | Atualiza o status de visualização de uma mensagem.                                 |
 | `on`   | `chat:new_react`            | Atualiza o chat quando uma mensagem recebe uma reação.                             |

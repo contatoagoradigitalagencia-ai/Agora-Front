@@ -41,7 +41,7 @@ const Body = memo(function Body({ socket }) {
 					{filtered.map((contact, i) => (<ContactCard key={i} contact={contact} onClick={() => setSelected(contact)} />))}
 				</div>
 			</div>
-			{selected && <ContactDrawer socket={socket} contact={selected} onClose={() => setSelected(null)} />}
+			{selected && <ContactDrawer socket={socket} contact={selected} setContact={setSelected} onClose={() => setSelected(null)} />}
 		</>
 	);
 });

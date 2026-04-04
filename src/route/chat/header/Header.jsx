@@ -24,7 +24,7 @@ export default function Header({ socket }) {
 				{stateBot !== null && <i className={`bi bi-robot cursor-pointer text-4xl ${(stateBot) ? "text-orange-500" : "text-gray-500"}`} onClick={() => botOnOff(socket, phone, setStateBot, !stateBot)} />}
 				<i className="bi bi-three-dots-vertical cursor-pointer text-4xl text-orange-500" onClick={() => setSelected(true)} />
 			</header>
-			{selected && <OptionsDrawer socket={socket} selected={selected} onClose={() => setSelected(null)} />}
+			{selected && <OptionsDrawer socket={socket} selected={selected} onClose={() => setSelected(false)} />}
 		</>
 	);
 }
