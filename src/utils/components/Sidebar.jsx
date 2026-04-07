@@ -31,6 +31,10 @@ function SidebarContent({ navigate, close }) {
 						<i className="bi bi-telephone text-xl" />
 						<span>Contatos</span>
 					</Link>
+					<Link className={`flex items-center gap-1 px-4 py-2 rounded-lg ${(location.pathname === "/quick-messages") ? "bg-orange-500 text-black" : "hover:bg-zinc-800"}`} to="/quick-messages" onClick={close}>
+						<i className="bi bi-chat-right-text text-xl" />
+						<span>Mensagens rápidas</span>
+					</Link>
 					<Link className={`flex items-center gap-1 px-4 py-2 rounded-lg ${(location.pathname === "/bot") ? "bg-orange-500 text-black" : "hover:bg-zinc-800"}`} to="/bot" onClick={close}>
 						<i className="bi bi-robot text-xl" />
 						<span>Bot</span>

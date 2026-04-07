@@ -35,7 +35,7 @@ const Body = memo(function Body({ socket }) {
 	const filtered = contacts.filter((contact) => (contact.name || "").toLowerCase().includes(search.toLowerCase()));
 	return (
 		<>
-			<div className="flex flex-col h-full p-4 gap-4 animate-toastIn">
+			<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
 				<input className="px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg focus:outline-none focus:border-orange-500" type="text" placeholder="Buscar contatos..." value={search} onChange={(e) => setSearch(e.target.value)} />
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto">
 					{filtered.map((contact, i) => (<ContactCard key={i} contact={contact} onClick={() => setSelected(contact)} />))}

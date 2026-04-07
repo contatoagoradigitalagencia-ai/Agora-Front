@@ -199,6 +199,14 @@ Portanto, antes de utilizar os eventos de WebSocket documentados neste projeto, 
 | `emit` | `contacts:save_comment`  | Salva o comentário em um contato.                  |
 ---
 
+## /spreadsheets
+
+| Tipo   | Evento                                  | Descrição                                                                           |
+| ------ | --------------------------------------- | ----------------------------------------------------------------------------------- |
+| `emit` | `spreadsheets:get_spreadsheets`         | Carrega as páginas existentes e quais estão alimentando a IA.                       |
+| `emit` | `spreadsheets:update_used_spreadsheets` | Informa ao servidor que uma página da planilha começou ou deixou de alimentar a IA. |
+---
+
 # 📡 Exemplo de uso no Front-End
 
 ```javascript

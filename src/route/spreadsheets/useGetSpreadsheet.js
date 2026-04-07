@@ -31,7 +31,7 @@ export function useGetSpreadsheet(socket) {
 export function selectSpreadsheet(socket, spreadsheets, setSpreadsheets, index) {
 	const spreadsheet = spreadsheets[index];
 
-	socket.emit("spreadsheets:update_used_spreadsheets", { [!spreadsheet.selected ? "add" : "remove"]: spreadsheet.page }, (res) => {
-		if (res === 200) setSpreadsheets((prev) => prev.map((item, i) => ((i === index) ? { ...item, selected: !spreadsheet.selected } : item)));
+	socket.emit("spreadsheets:update_used_spreadsheets", { [!spreadsheet.active ? "add" : "remove"]: spreadsheet.page }, (res) => {
+		if (res === 200) setSpreadsheets((prev) => prev.map((item, i) => ((i === index) ? { ...item, active: !spreadsheet.active } : item)));
 	});
 }
