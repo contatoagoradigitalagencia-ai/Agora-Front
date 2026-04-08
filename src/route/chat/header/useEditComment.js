@@ -31,3 +31,15 @@ export function handleSave(socket, phone, comment, setEditing, setContact) {
 		setEditing(false);
 	});
 }
+
+/**
+ * @author VAMPETA
+ * @brief FUNCAO QUE CANCELA O COMENTARIO
+ * @param {String} comment COMENTARIO QUE SERA SALVO
+ * @param {String} setComment NUMERO DO CONTATO
+ * @param {Object} setEditing FUNCAO DE CONTROLE DA VARIAVEL editing
+ */
+export function handleCancel(comment, setComment, setEditing) {
+	setComment(comment || "");
+	setEditing(false);
+}

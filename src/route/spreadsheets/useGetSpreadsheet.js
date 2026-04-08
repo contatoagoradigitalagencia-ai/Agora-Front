@@ -6,32 +6,38 @@ import { useState, useEffect } from "react";
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export function useGetSpreadsheet(socket) {
-	const [spreadsheets, setSpreadsheets] = useState(null);
+	const [infoSpreadsheets, setInfoSpreadsheets] = useState(null);
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		socket.emit("spreadsheets:get_spreadsheets", {}, (res) => {
 			if (!res || res.error) return (setError(true));
-			setSpreadsheets(res);
+			setInfoSpreadsheets(res);
 			setLoading(false);
 		});
 	}, [socket]);
-	return ({ spreadsheets, setSpreadsheets, loading, error });
+	return ({ infoSpreadsheets, setInfoSpreadsheets, loading, error });
 }
 
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE ATUALIZA QUAIS PLANILHAS ESTAO SENDO USADAS
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
- * @param {Object} spreadsheets VARIAVEL QUE CONTEM AS PLANILHAS DISPONIVEIS E QUAIS ESTAO EM USO
- * @param {Object} setSpreadsheets FUNCAO DE CONTROLE DA VARIAVEL spreadsheets
+ * @param {Object} infoSpreadsheets VARIAVEL QUE CONTEM AS PLANILHAS DISPONIVEIS E QUAIS ESTAO EM USO
+ * @param {Object} setInfoSpreadsheets FUNCAO DE CONTROLE DA VARIAVEL spreadsheets
  * @param {Number} index POSICAO DO COMPONENTE QUE SERA ATUALIZADO
 */
-export function selectSpreadsheet(socket, spreadsheets, setSpreadsheets, index) {
-	const spreadsheet = spreadsheets[index];
+export function selectSpreadsheet(socket, infoSpreadsheets, setInfoSpreadsheets, index) {
+	const spreadsheet = infoSpreadsheets.pages[index];
 
 	socket.emit("spreadsheets:update_used_spreadsheets", { [!spreadsheet.active ? "add" : "remove"]: spreadsheet.page }, (res) => {
-		if (res === 200) setSpreadsheets((prev) => prev.map((item, i) => ((i === index) ? { ...item, active: !spreadsheet.active } : item)));
+		if (!res || (!res.add && !res.remove) || res.error) return ;
+		setInfoSpreadsheets((prev) => {
+			return ({
+				...prev,
+				pages: prev.pages.map((item, i) => ((i === index) ? { ...item, active: !spreadsheet.active } : item))
+			});
+		});
 	});
 }

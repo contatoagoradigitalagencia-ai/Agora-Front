@@ -66,8 +66,7 @@ function SidebarContent({ navigate, close }) {
 				</nav>
 			</div>
 			<div className="p-4">
-				<button
-					className="w-full px-4 py-2 bg-orange-500 text-black rounded-lg hover:bg-orange-400 transition cursor-pointer"
+				<button className="w-full px-4 py-2 bg-orange-500 text-black rounded-lg hover:bg-orange-400 transition cursor-pointer"
 					onClick={() => {
 						logout(navigate);
 						if (close) close();

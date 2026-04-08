@@ -13,10 +13,10 @@ export function useGetContact(socket, phone) {
 	useEffect(() => {
 		if (!socket || !phone) return;
 		socket.emit("chat:info_contact", { phone: phone }, (res) => {
-			if (!res) return ;
+			if (!res || res.error) return ;
 			setContact(res);
 			setLoading(false);
 		});
-	}, [socket, phone]);
+	}, [socket]);
 	return ({ contact, setContact, loading });
 }
