@@ -34,7 +34,7 @@ const Body = memo(function Body({ socket }) {
 				</ul>
 			</div>
 
-			<PromptSuggestion />
+			<PromptSuggestion socket={socket} />
 		</div>
 	);
 });
