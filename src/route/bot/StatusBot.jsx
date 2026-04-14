@@ -33,7 +33,7 @@ export default function StatusBot({ socket, bot }) {
 				<p className="text-sm text-zinc-400">Ative ou desative as respostas automáticas da IA no WhatsApp.</p>
 			</div>
 			<label className="flex items-center justify-between cursor-pointer">
-				<span className="text-sm text-zinc-300">Ativar redirecionamento</span>
+				<span className="text-sm text-zinc-300">Visualização {(status) ? "ativada" : "desativada"}</span>
 				<div className="relative">
 					<input type="checkbox" className="sr-only peer" checked={status} onChange={() => updateStatusBot(socket, status, setStatus)} />
 					<div className="w-10 h-5 bg-zinc-700 rounded-full peer peer-checked:bg-orange-500 transition-colors" />

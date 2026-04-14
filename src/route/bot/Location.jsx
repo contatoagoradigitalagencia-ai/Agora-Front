@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import toast from "react-hot-toast";
+
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE ENVIA A NOVA MENSAGEM PARA O BACK END
@@ -7,12 +9,10 @@ import { useState } from "react";
  * @param {String} input NOVA MENSAGEM
 */
 export function handleSave(socket, input) {
-	if (!input.name) return ;
-	if (!input.address) return ;
-	if (!input.latitude) return ;
-	if (!input.longitude) return ;
+	if (!(input.name && input.address && input.latitude && input.longitude) && !(!input.name && !input.address && !input.latitude && !input.longitude)) return ;
 	socket.emit("bot:update_location", { name: input.name, address: input.address, latitude: input.latitude, longitude: input.longitude }, (res) => {
-		if (res !== 204) return ;
+		if (res !== 204) return (toast.error("Erro ao salvar!"));
+		toast.success("Salvo com sucesso!");
 	});
 }
 

@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import toast from "react-hot-toast";
+
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE ENVIA A NOVA MENSAGEM PARA O BACK END
@@ -7,9 +9,9 @@ import { useState } from "react";
  * @param {String} input NOVA MENSAGEM
 */
 export function handleSave(socket, input) {
-	if (!input) return ;
 	socket.emit("bot:update_message_not_supported", { message: input }, (res) => {
-		if (res !== 204) return ;
+		if (res !== 204) return (toast.error("Erro ao salvar!"));
+		toast.success("Salvo com sucesso!");
 	});
 }
 

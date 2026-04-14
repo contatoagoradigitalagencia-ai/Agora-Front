@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
  * @param {String} input NOVA MENSAGEM
 */
 export function handleSave(socket, input) {
-	if (!input) return ;
 	socket.emit("bot:update_message_new_contact", { message: input }, (res) => {
 		if (res !== 204) return (toast.error("Erro ao salvar!"));
 		toast.success("Salvo com sucesso!");

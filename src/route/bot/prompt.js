@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 /**
  * @author VAMPETA
  * @brief ADICIONA UM CAMPO DE DIGITACAO DE PROMPT
@@ -38,7 +40,8 @@ export function handleSave(socket, fields) {
 	const prompt = buildPrompt(fields.filter((f) => (f.trim() !== "")));
 
 	socket.emit("bot:update_prompt", { prompt: prompt }, (res) => {
-		if (res !== 204) return ;
+		if (res !== 204) return (toast.error("Erro ao salvar!"));
+		toast.success("Salvo com sucesso!");
 	});
 }
 

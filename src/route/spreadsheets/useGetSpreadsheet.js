@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import toast from "react-hot-toast";
+
 /**
  * @author VAMPETA
  * @brief HOOK QUE BUSCA INFORMACOES DE CONFIGURACOES DA PLANILHA
@@ -32,12 +34,13 @@ export function selectSpreadsheet(socket, infoSpreadsheets, setInfoSpreadsheets,
 	const spreadsheet = infoSpreadsheets.pages[index];
 
 	socket.emit("spreadsheets:update_used_spreadsheets", { [!spreadsheet.active ? "add" : "remove"]: spreadsheet.page }, (res) => {
-		if (!res || (!res.add && !res.remove) || res.error) return ;
+		if (res !== 204) return (toast.error("Erro ao salvar!"));
 		setInfoSpreadsheets((prev) => {
 			return ({
 				...prev,
 				pages: prev.pages.map((item, i) => ((i === index) ? { ...item, active: !spreadsheet.active } : item))
 			});
 		});
+		toast.success("Salvo com sucesso!");
 	});
 }
