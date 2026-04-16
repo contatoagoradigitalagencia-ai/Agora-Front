@@ -1,0 +1,89 @@
+import { useState } from "react";
+
+const TYPES = [
+    { key: "text", label: "Texto", icon: "bi-chat-dots" },
+    { key: "image", label: "Imagem", icon: "bi-image" },
+    { key: "video", label: "Vídeo", icon: "bi-camera-video" },
+    { key: "audio", label: "Áudio", icon: "bi-mic" }
+];
+
+export default function Body({ socket }) {
+    const [messages, setMessages] = useState([]);
+    const [selectedId, setSelectedId] = useState(null);
+    const [view, setView] = useState("home");
+
+    function handleCreate(type) {
+        const msg = {
+            id: Date.now(),
+            name: "Nova mensagem",
+            type,
+            content: "",
+            mediaUrl: "",
+            caption: ""
+        };
+
+        setMessages(prev => [msg, ...prev]);
+        setSelectedId(msg.id);
+        setView("editor");
+    }
+
+    function countByType(type) {
+        return messages.filter(m => m.type === type).length;
+    }
+
+    return (
+        <div className="p-4 sm:p-6 flex flex-col gap-6">
+
+            {/* HOME */}
+            {view === "home" && (
+                <>
+                    <div>
+                        <h1 className="text-lg font-semibold">Mensagens rápidas</h1>
+                        <p className="text-sm text-zinc-400">
+                            Escolha um tipo de mensagem para começar
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+
+                        {TYPES.map(type => (
+                            <div
+                                key={type.key}
+                                className="bg-zinc-900 border border-zinc-800 rounded-lg p-4 flex flex-col gap-4 hover:bg-zinc-800 transition cursor-pointer"
+                                onClick={() => handleCreate(type.key)}
+                            >
+                                <div className="flex justify-between items-center">
+                                    <i className={`bi ${type.icon} text-xl text-orange-500`} />
+                                    
+                                    <span className="text-xs bg-zinc-800 px-2 py-1 rounded text-zinc-400">
+                                        {countByType(type.key)} salvas
+                                    </span>
+                                </div>
+
+                                <div>
+                                    <p className="text-sm font-medium">{type.label}</p>
+                                    <p className="text-xs text-zinc-400">
+                                        Criar nova mensagem
+                                    </p>
+                                </div>
+
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setView("list");
+                                    }}
+                                    className="text-xs text-orange-500 hover:underline"
+                                >
+                                    Ver mensagens →
+                                </button>
+                            </div>
+                        ))}
+
+                    </div>
+                </>
+            )}
+
+            {/* AQUI você mantém seu layout atual de lista/editor */}
+        </div>
+    );
+}

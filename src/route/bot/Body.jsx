@@ -10,7 +10,7 @@ import MessageNotSupported from "./MessageNotSupported.jsx";
 import Location from "./Location.jsx";
 import MessageNewContact from "./MessageNewContact.jsx";
 import Redirect from "./Redirect.jsx";
-import OpeningHours from "./OpeningHours.jsx";
+// import OpeningHours from "./OpeningHours.jsx";
 
 /**
  * @author VAMPETA
