@@ -135,6 +135,10 @@ export function handleCancel(selected, setMessages, setSelectedMessage, setView)
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
 export function handleSave(socket, selected, setMessages, setSelectedMessage, setView) {
+	if (selected.message.type === "location") {
+		selected.message.location.latitude = parseFloat(selected.message.location.latitude);
+		selected.message.location.longitude = parseFloat(selected.message.location.longitude);
+	}
 	socket.emit("quick-messages:save_quick_message", { id: (selected.isNew) ? undefined : selected.id, name: selected.name, message: selected.message }, (res) => {
 		if (!res || res.error) return (toast.error("Erro ao salvar mensagem!"));
 		setMessages((prev) => {

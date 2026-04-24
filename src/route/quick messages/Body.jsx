@@ -50,7 +50,7 @@ export default function Body({ socket }) {
 				<Card route="text" type="Texto" icon="bi-chat-dots" />
 				<Card route="sticker" type="Figurinha" icon="bi-emoji-smile" deactivated />
 				<Card route="audio" type="Áudio" icon="bi-mic" deactivated />
-				<Card route="image" type="Imagem" icon="bi-image" deactivated />
+				<Card route="image" type="Imagem" icon="bi-image" />
 				<Card route="video" type="Vídeo" icon="bi-camera-video" deactivated />
 				<Card route="location" type="Localização" icon="bi-geo-alt" />
 				<Card route="contact" type="Contato" icon="bi-person-lines-fill" deactivated/>

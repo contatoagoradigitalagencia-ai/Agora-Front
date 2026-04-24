@@ -1,7 +1,39 @@
-import FieldsText from "./text/editor/FieldsText.jsx";
-import FieldsLocation from "./location/editor/FiledsLocation.jsx";
-
 import { handleUpdateName, handleUpdateFields, handleDelete, handleCancel, handleSave } from "./functions.js";
+
+/**
+ * @author VAMPETA
+ * @brief COMPONENTE RESPONSAVEL PELO CONTEUDO DA LISTA DE MENSAGENS DO TIPO TEXT
+ * @param {Object} content INFORMACOES DA MENSAGEM
+ * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
+ * @param {Number} selectedMessage ID DA MENSAGEM ATUALMENTE SELECIONADA
+*/
+function FieldsText({ content, setMessages, selectedMessage }) {
+	return (
+		<>
+			<textarea className="text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm min-h-[140px] outline-none" value={content.message.text.body ?? ""} placeholder="Digite a mensagem..." onChange={(e) => handleUpdateFields("body", e.target.value, setMessages, selectedMessage)} />
+		</>
+	);
+}
+
+/**
+ * @author VAMPETA
+ * @brief COMPONENTE RESPONSAVEL PELO CONTEUDO DA LISTA DE MENSAGENS DO TIPO LOCATION
+ * @param {Object} content INFORMACOES DA MENSAGEM
+ * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
+ * @param {Number} selectedMessage ID DA MENSAGEM ATUALMENTE SELECIONADA
+*/
+function FieldsLocation({ content, setMessages, selectedMessage }) {
+	return (
+		<>
+			<input className="flex-1 text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" type="text" value={content.message.location.name ?? ""} placeholder="Digite o nome do endereço..." onChange={(e) => handleUpdateFields("name", e.target.value, setMessages, selectedMessage)} />
+			<textarea className="text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm min-h-[140px] outline-none" type="text" value={content.message.location.address ?? ""} placeholder="Digite o endereço..." onChange={(e) => handleUpdateFields("address", e.target.value, setMessages, selectedMessage)} />
+			<div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+				<input className="flex-1 text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" type="number" step="any" value={content.message.location.latitude ?? ""} placeholder="Digite a latidute..." onChange={(e) => handleUpdateFields("latitude", e.target.value, setMessages, selectedMessage)} />
+				<input className="flex-1 text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" type="number" step="any" value={content.message.location.longitude ?? ""} placeholder="Digite a longitude..." onChange={(e) => handleUpdateFields("longitude", e.target.value, setMessages, selectedMessage)} />
+			</div>
+		</>
+	);
+}
 
 /**
  * @author VAMPETA
@@ -26,7 +58,7 @@ export default function Editor({ socket, messages, setMessages, selectedMessage,
 
 					{/* HEADER */}
 					<div className="flex justify-between gap-2">
-						<input className="flex-1 text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" value={selected.name} placeholder="Digite o nome da mensagem..." onChange={(e) => handleUpdateName(e.target.value, setMessages, selectedMessage)} />
+						<input className="flex-1 text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm outline-none" type="text" value={selected.name} placeholder="Digite o nome da mensagem..." onChange={(e) => handleUpdateName(e.target.value, setMessages, selectedMessage)} />
 						<button className="text-zinc-400 hover:text-red-500 transition" onClick={() => handleDelete(socket, selected.id, setMessages, setSelectedMessage, setView)}>
 							<i className="bi bi-trash text-lg" />
 						</button>
