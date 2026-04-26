@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import Options from "./options/Options.jsx";
 
@@ -27,7 +28,15 @@ function handleInput(setMessage, value, textareaRef) {
 */
 function sendText(socket, phone, message, setMessage, textareaRef) {
 	if (!message.trim()) return ;
-	socket.emit("chat:send:text", { phone: phone, text: message });
+	const data = {
+		type: "text",
+		text: {
+			body: message
+		}
+	};
+	socket.emit("chat:send_message", { phone: phone, message: data }, (res) => {
+		if (res !== 204 && res.error) return (toast.error("Mesagem não enviada"));
+	});
 	setMessage("");
 	textareaRef.current.style.height = "auto";
 }

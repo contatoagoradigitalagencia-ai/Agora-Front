@@ -2,56 +2,7 @@ import { useState } from "react";
 
 import { handleUpdateName, handleUpdateFields, handleDelete, handleCancel, handleSave } from "./functions.js";
 
-
-
-/**
- * @author VAMPETA
- * @brief COMPONENTE DE UPLOAD DE IMAGEM COM REMOCAO
- * @param {Function} onChange RETORNA O ARQUIVO SELECIONADO
- * @param {string} accept TIPOS ACEITOS
- */
-function FileUpload({ onChange, accept }) {
-	const [file, setFile] = useState(null);
-
-	function handleSelect2(e) {
-		const selected = e.target.files[0];
-		if (!selected) return;
-		setFile(selected);
-		onChange && onChange(selected);
-	}
-	function handleRemove2() {
-		setFile(null);
-		onChange && onChange(null);
-	}
-
-	return (
-		<div className="flex flex-col gap-2">
-
-			{/* BOTAO */}
-			<label className="flex items-center justify-center gap-2 cursor-pointer text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm hover:bg-zinc-700 transition">
-				<i className="bi bi-image text-lg" />
-				Selecionar imagem
-				<input type="file" accept={accept} className="hidden" onChange={handleSelect2} />
-			</label>
-
-			{/* ARQUIVO SELECIONADO */}
-			{file && (
-				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-2 bg-zinc-800 border border-zinc-700 rounded px-3 py-2">
-						<i className="bi bi-file-earmark-image text-zinc-400" />
-						<span className="text-xs text-zinc-300 truncate flex-1">{file.name}</span>
-						<button className="text-zinc-500 hover:text-red-500 transition" onClick={handleRemove2}>
-							<i className="bi bi-x-lg text-xs" />
-						</button>
-					</div>
-				</div>
-			)}
-
-		</div>
-	);
-}
-
-
+import FileUpload from "../../utils/components/FileUpload.jsx";
 
 /**
  * @author VAMPETA
@@ -76,40 +27,9 @@ function FieldsText({ content, setMessages, selectedMessage }) {
  * @param {Number} selectedMessage ID DA MENSAGEM ATUALMENTE SELECIONADA
 */
 function FieldsImage({ content, setMessages, selectedMessage }) {
-	const [file, setFile] = useState(null);
-
 	return (
 		<>
-			{/* <div className="flex flex-col gap-2">
-  <label className="flex items-center justify-center gap-2 cursor-pointer text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm hover:bg-zinc-700 transition">
-    <i className="bi bi-image text-lg" />
-    Selecionar imagem
-    <input
-      type="file"
-      accept="image/*"
-      className="hidden"
-      onChange={(e) => setFile(e.target.files[0])}
-    />
-  </label>
-
-{file && (
-  <div className="flex items-center gap-2 bg-zinc-800 border border-zinc-700 rounded px-3 py-2">
-    <i className="bi bi-file-earmark-image text-zinc-400" />
-    
-    <span className="text-xs text-zinc-300 truncate flex-1">
-      {file.name}
-    </span>
-
-    <button
-      onClick={() => setFile(null)}
-      className="text-zinc-500 hover:text-red-500 transition"
-    >
-      <i className="bi bi-x-lg text-xs" />
-    </button>
-  </div>
-)}
-</div> */}
-<FileUpload accept="image/*" onChange={(file) => console.log(file)} />
+			<FileUpload accept="image/*" onChange={(file) => handleUpdateFields("file", file, setMessages, selectedMessage)} />
 			<textarea className="text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm min-h-[140px] outline-none" value={content.message.image.caption ?? ""} placeholder="Digite a mensagem..." onChange={(e) => handleUpdateFields("caption", e.target.value, setMessages, selectedMessage)} />
 		</>
 	);

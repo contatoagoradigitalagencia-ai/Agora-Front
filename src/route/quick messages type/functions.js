@@ -1,4 +1,8 @@
+import axios from "axios";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
+
+import server from "../../server.js";
 
 const messageType = {
 	text: {
@@ -11,7 +15,8 @@ const messageType = {
 		type: "image",
 		image: {
 			link: "",
-			caption: ""
+			caption: "",
+			file: File
 		}
 	},
 	location: {
@@ -141,7 +146,34 @@ export function handleCancel(selected, setMessages, setSelectedMessage, setView)
  * @param {Function} setSelectedMessage DEFINE QUAL A MENSAGEM ESTA SELECIONADA
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
-export function handleSave(socket, selected, setMessages, setSelectedMessage, setView) {
+export async function handleSave(socket, selected, setMessages, setSelectedMessage, setView) {
+	if (selected.message.type === "image") {
+if (!selected.message.image.file) return ;
+const formData = new FormData();
+formData.append("file", selected.message.image.file);
+
+try {
+	const token = Cookies.get("token");
+	if (!token) return (toast.error("Erro ao salvar imagem"));
+	const res = await axios({
+		method: "POST",
+		url: `${server}/upload`,
+		headers: {
+			Authorization: `Bearer ${token}`,
+			"Content-Type": "multipart/form-data"
+		},
+		data: formData
+	});
+	if (res.status !== 200) return (toast.error("Erro ao salvar imagem"));
+	// salva o link retornado
+	selected.message.image.link = res.data.url;
+
+	// remove o file (boa prática)
+	delete selected.message.image.file;
+} catch (error) {
+	return (toast.error("Erro ao salvar imagem"));
+}
+	}
 	if (selected.message.type === "location") {
 		selected.message.location.latitude = parseFloat(selected.message.location.latitude);
 		selected.message.location.longitude = parseFloat(selected.message.location.longitude);

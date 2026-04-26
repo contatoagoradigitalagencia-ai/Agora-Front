@@ -1,4 +1,5 @@
 import { memo } from "react";
+import toast from "react-hot-toast";
 
 /**
  * @author VAMPETA
@@ -8,13 +9,9 @@ import { memo } from "react";
  * @param {Object} message MENSAGEM A SER ENVIADA
 */
 export function sendReadyLocation(socket, phone, message) {
-	if (!message || !message?.location?.latitude || !message?.location?.longitude) return;
-	socket.emit("chat:send:location", {
-		phone: phone,
-		latitude: message.location.latitude,
-		longitude: message.location.longitude,
-		name: message.location.name,
-		address: message.location.address
+	if (!message || !message?.location?.latitude || !message?.location?.longitude) return ;
+	socket.emit("chat:send_message", { phone: phone, message: message }, (res) => {
+		if (res !== 204 && res.error) return (toast.error("Mesagem Rápida não enviada"));
 	});
 }
 

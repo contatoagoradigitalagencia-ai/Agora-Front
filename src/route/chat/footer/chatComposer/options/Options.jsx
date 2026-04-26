@@ -4,6 +4,7 @@ import { useQuickMessages } from "./useQuickMessages.js";
 
 import { Text, sendReadyText } from "./Text.jsx";
 import { Location, sendReadyLocation } from "./Locatioin.jsx";
+import { Image, sendReadyImage } from "./Image.jsx";
 
 /**
  * @author VAMPETA
@@ -16,6 +17,9 @@ function sendReadyMessage(socket, phone, message) {
 	switch (message.type) {
 		case "text":
 			sendReadyText(socket, phone, message);
+			break;
+		case "image":
+			sendReadyImage(socket, phone, message);
 			break;
 		case "location":
 			sendReadyLocation(socket, phone, message);
@@ -32,6 +36,8 @@ function Message({ message }) {
 	switch (message.type) {
 		case "text":
 			return <Text message={message} />;
+		case "image":
+			return <Image message={message} />;
 		case "location":
 			return <Location message={message} />;
 		default:
