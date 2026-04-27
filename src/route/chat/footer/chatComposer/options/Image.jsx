@@ -23,7 +23,7 @@ export function sendReadyImage(socket, phone, message) {
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 export const Image = memo(function Image({ message }) {
-	const text = useMemo(() => formattedText(message.image.caption), [message.image.caption]);
+	const caption = useMemo(() => formattedText(message.image.caption), [message.image.caption]);
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -35,7 +35,7 @@ export const Image = memo(function Image({ message }) {
 					<p>Imagem não disponível</p>
 				</div>
 			)}
-			{text && <p>{text}</p>}
+			{caption && <p>{caption}</p>}
 		</div>
 	);
 });

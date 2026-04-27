@@ -112,12 +112,18 @@ export function handleUpdateFields(field, value, setMessages, selectedMessage) {
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
 export function handleDelete(socket, id, setMessages, setSelectedMessage, setView) {
+	if (id.startsWith("id-")) {
+		setMessages((prev) => (prev.filter((m) => (m.id !== id))));
+		setSelectedMessage(null);
+		setView("list");
+		return (toast.success("Mensagem deletada!"));
+	}
 	socket.emit("quick-messages:delete_quick_message", { id: id }, (res) => {
 		if (res !== 204) return (toast.error("Erro ao deletar mensagem!"));
 		setMessages((prev) => (prev.filter((m) => (m.id !== id))));
 		setSelectedMessage(null);
 		setView("list");
-		toast.success("Mensagem deletada!")
+		toast.success("Mensagem deletada!");
 	});
 }
 
@@ -139,6 +145,43 @@ export function handleCancel(selected, setMessages, setSelectedMessage, setView)
 
 /**
  * @author VAMPETA
+ * @brief FUNCAO QUE PROCESSA ALGUNS DETALHES DA MENSAGEM ANTES DE ENVIAR PARA O BACK END (NO CASO DA IMAGEM GERA UM LINK HOSPEDADO)
+ * @param {object} selected INFORMACOES DA MENSAGEM SELECIONADA
+*/
+async function processMessage(selected) {
+	switch (selected.message.type) {
+		case "image":
+			if (!selected.message.image.file) return ;
+			const formData = new FormData();
+			formData.append("file", selected.message.image.file);
+			try {
+				const token = Cookies.get("token");
+				if (!token) return (toast.error("Erro ao salvar imagem"));
+				const res = await axios({
+					method: "POST",
+					url: `${server}/upload`,
+					headers: {
+						Authorization: `Bearer ${token}`,
+						"Content-Type": "multipart/form-data"
+					},
+					data: formData
+				});
+				if (res.status !== 200) return (toast.error("Erro ao salvar imagem"));
+				selected.message.image.link = res.data.url;
+				delete selected.message.image.file;
+			} catch (error) {
+				return (toast.error("Erro ao salvar imagem"));
+			}
+			break;
+		case "location":
+			selected.message.location.latitude = parseFloat(selected.message.location.latitude);
+			selected.message.location.longitude = parseFloat(selected.message.location.longitude);
+			break;
+	}
+}
+
+/**
+ * @author VAMPETA
  * @brief FUNCAO QUE SALVA E ATUALZA O CONTEUDO DA MENSAGEM NO BACK END
  * @param {Function} socket SOCKET DE CONEXAO COM O BACK END
  * @param {String} selected INFORMACOES DA MENSAGEM SELECIONADA
@@ -147,37 +190,7 @@ export function handleCancel(selected, setMessages, setSelectedMessage, setView)
  * @param {Function} setView CONTROLA A VISUALIZACAO ATUAL (LISTA OU EDITOR)
 */
 export async function handleSave(socket, selected, setMessages, setSelectedMessage, setView) {
-	if (selected.message.type === "image") {
-if (!selected.message.image.file) return ;
-const formData = new FormData();
-formData.append("file", selected.message.image.file);
-
-try {
-	const token = Cookies.get("token");
-	if (!token) return (toast.error("Erro ao salvar imagem"));
-	const res = await axios({
-		method: "POST",
-		url: `${server}/upload`,
-		headers: {
-			Authorization: `Bearer ${token}`,
-			"Content-Type": "multipart/form-data"
-		},
-		data: formData
-	});
-	if (res.status !== 200) return (toast.error("Erro ao salvar imagem"));
-	// salva o link retornado
-	selected.message.image.link = res.data.url;
-
-	// remove o file (boa prática)
-	delete selected.message.image.file;
-} catch (error) {
-	return (toast.error("Erro ao salvar imagem"));
-}
-	}
-	if (selected.message.type === "location") {
-		selected.message.location.latitude = parseFloat(selected.message.location.latitude);
-		selected.message.location.longitude = parseFloat(selected.message.location.longitude);
-	}
+	await processMessage(selected);
 	socket.emit("quick-messages:save_quick_message", { id: (selected.isNew) ? undefined : selected.id, name: selected.name, message: selected.message }, (res) => {
 		if (!res || res.error) return (toast.error("Erro ao salvar mensagem!"));
 		setMessages((prev) => {

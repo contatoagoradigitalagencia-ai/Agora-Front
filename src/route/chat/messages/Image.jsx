@@ -14,7 +14,7 @@ const Image = memo(function Image({ message }) {
 	const imgRef = useRef(null);
 	const { toggleFullscreen } = useFullscreen();
 	const src = (message.direction === "outbound") ? message.data.image.link : message.data.image.url;
-	const text = useMemo(() => ((message?.data?.image?.caption) ? formattedText(message.data.image.caption) : null), [message?.data?.image?.caption]);
+	const caption = useMemo(() => ((message?.data?.image?.caption) ? formattedText(message.data.image.caption) : null), [message?.data?.image?.caption]);
 
 	return (
 		<div className="flex flex-col gap-2">
@@ -26,7 +26,7 @@ const Image = memo(function Image({ message }) {
 					<p>Imagem não disponível</p>
 				</div>
 			)}
-			{text && <p>{text}</p>}
+			{caption && <p>{caption}</p>}
 		</div>
 	);
 });
