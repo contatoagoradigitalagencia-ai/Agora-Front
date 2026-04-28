@@ -3,30 +3,11 @@ import { useParams } from "react-router-dom";
 
 import { useQuickMessages } from "./useQuickMessages.js";
 
-import { Text, sendReadyText } from "./Text.jsx";
-import { Location, sendReadyLocation } from "./Locatioin.jsx";
-import { Image, sendReadyImage } from "./Image.jsx";
+import Text from "./Text.jsx";
+import Location from "./Locatioin.jsx";
+import Image from "./Image.jsx";
 
-/**
- * @author VAMPETA
- * @brief FUNCAO QUE IDENTIFICA O TIPO DA MENSAGEM
- * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
- * @param {String} phone NUMERO DO CLIENTE QUE ESTA CONVERSANDO COM O BOT
- * @param {String} message MENSAGEM A SER ENVIADA
-*/
-function sendReadyMessage(socket, phone, message) {
-	switch (message.type) {
-		case "text":
-			sendReadyText(socket, phone, message);
-			break;
-		case "image":
-			sendReadyImage(socket, phone, message);
-			break;
-		case "location":
-			sendReadyLocation(socket, phone, message);
-			break;
-	}
-}
+import { sendReadyMessage } from "./sendReadyMessage.js";
 
 /**
  * @author VAMPETA
@@ -50,68 +31,56 @@ function Message({ message }) {
  * @author VAMPETA
  * @brief COMPONENTE RESPONSAVEL POR EXIBIR O MENU DE OPCOES
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
-*/
+// */
 export default function Options({ socket }) {
 	const { phone } = useParams();
-	const [type, setType] = useState("text");
+	const [type, setType] = useState(null);
 	const { messages } = useQuickMessages(socket, type);
 	const types = [
-		{ label: "Texto", value: "text" },
-		{ label: "Imagem", value: "image" },
-		{ label: "Localização", value: "location" }
+		{ label: "Texto", value: "text", icon: "bi-chat-left-text" },
+		{ label: "Áudio", value: "audio", icon: "bi-mic" },
+		{ label: "Imagem", value: "image", icon: "bi-image" },
+		{ label: "Localização", value: "location", icon: "bi-geo-alt" }
 	];
 
-	// if (messages === null) return (
-	// 	<div className="flex items-center justify-center h-[100%]">
-	// 		<div className="h-10 w-10 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
-	// 	</div>
-	// );
-	// if (Array.isArray(messages) && messages.length === 0) return (
-	// 	<div className="flex flex-col items-center justify-center h-[100%]">
-	// 		<i className="bi bi-chat-right-text text-white text-5xl" />
-	// 		<p className="text-white">Nenhuma mensagem</p>
-	// 	</div>
-	// );
-	// return (
-	// 	<>
-	// 		{messages.map((message, i) => (
-	// 			<div className="flex justify-center my-3 cursor-pointer" key={i} onClick={() => sendReadyMessage(socket, phone, message)}>
-	// 				<div className="inline-block bg-gray-400 px-3 py-2 rounded min-w-[60%] max-w-[80%] break-words whitespace-pre-wrap">
-	// 					<Message message={message} />
-	// 				</div>
-	// 			</div>
-	// 		))}
-	// 	</>
-	// );
-	return (												// AINDA NAO SEI SE VOU CONTINUAR COM ESSA IDEIA
-		<div className="flex flex-col h-full">
-			<div className="flex gap-2 p-2 border-b border-zinc-700">
+	return (
+		<div className="relative h-full">
+			<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 p-6 h-full place-content-center">
 				{types.map((t) => (
-					<button className={`flex-1 p-2 text-sm rounded cursor-pointer transition ${(type === t.value) ? "bg-orange-500 text-black" : "bg-zinc-800 text-white hover:bg-zinc-700"}`} key={t.value} onClick={() => setType(t.value)}>
-						{t.label}
+					<button className="flex flex-col items-center gap-2 cursor-pointer" key={t.value} onClick={() => setType(t.value)}>
+						<div className="h-20 w-20 bg-zinc-900 rounded-xl flex items-center justify-center hover:bg-zinc-700">
+							<i className={`bi ${t.icon} text-xl text-orange-500`} />
+						</div>
+						<span className="text-white text-sm">{t.label}</span>
 					</button>
 				))}
 			</div>
-			<div className="flex-1 overflow-y-auto">
-				{messages === null && (
-					<div className="flex items-center justify-center h-full">
-						<div className="h-10 w-10 animate-spin rounded-full border-4 border-orange-500 border-t-transparent"></div>
-					</div>
-				)}
-				{Array.isArray(messages) && messages.length === 0 && (
-					<div className="flex flex-col items-center justify-center h-full">
-						<i className="bi bi-chat-right-text text-white text-5xl" />
-						<p className="text-white">Nenhuma mensagem</p>
-					</div>
-				)}
-				{Array.isArray(messages) && messages.map((message, i) => (
-					<div className="flex justify-center my-3 cursor-pointer" key={i} onClick={() => sendReadyMessage(socket, phone, message)}>
-						<div className="inline-block bg-gray-400 px-3 py-2 rounded min-w-[60%] max-w-[80%] break-words whitespace-pre-wrap">
-							<Message message={message} />
+			{type && (
+				<div className="fixed inset-0 z-50 flex flex-col items-center justify-center">
+					<div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setType(null)} />
+					<div className="flex flex-col relative w-[90%] h-[90%] max-w-2xl bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden animate-[fadeIn_.2s_ease]">
+						<button className="absolute top-4 right-4 text-white hover:text-orange-500 cursor-pointer" onClick={() => setType(null)}>
+							<i className="bi bi-x-lg text-3xl" />
+						</button>
+						<div className="flex-1 overflow-y-auto p-4">
+							{messages === null && (
+								<div className="flex items-center justify-center h-full">
+									<div className="h-10 w-10 animate-spin rounded-full border-4 border-orange-500 border-t-transparent" />
+								</div>
+							)}
+							{Array.isArray(messages) && (
+								<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+									{messages.map((message, i) => (
+										<div className="bg-gray-400 hover:bg-gray-600 p-3 rounded cursor-pointer transition break-words" key={i} onClick={() => { sendReadyMessage(socket, phone, message), setType(null) }}>
+											<Message message={message} />
+										</div>
+									))}
+								</div>
+							)}
 						</div>
 					</div>
-				))}
-			</div>
+				</div>
+			)}
 		</div>
 	);
 }

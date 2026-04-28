@@ -10,12 +10,9 @@ export function useQuickMessages(socket, type) {
 	const [messages, setMessages] = useState(null);
 
 	useEffect(() => {
-		// socket.emit("chat:quick_messages", {  }, (res) => {
-		// 	setMessages(res);
-		// });
-		// socket.emit("quick-messages:get_quick_messages", { type: "location" }, (res) => {
-		// socket.emit("quick-messages:get_quick_messages", {  }, (res) => {
-		socket.emit("quick-messages:get_quick_messages", { type: type }, (res) => {		// SUBSTITUINDO chat:quick_messages
+		if (!type) return ;
+		if (messages?.type !== type) setMessages(null);
+		socket.emit("quick-messages:get_quick_messages", { type: type }, (res) => {
 			setMessages(res.map((item) => (item.message)));
 		});
 	}, [socket, type]);
