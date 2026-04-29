@@ -49,7 +49,7 @@ export default function Body({ socket }) {
 			<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
 				<Card route="text" type="Texto" icon="bi-chat-dots" />
 				<Card route="sticker" type="Figurinha" icon="bi-emoji-smile" deactivated />
-				<Card route="audio" type="Áudio" icon="bi-mic" deactivated />
+				<Card route="audio" type="Áudio" icon="bi-mic" />
 				<Card route="image" type="Imagem" icon="bi-image" />
 				<Card route="video" type="Vídeo" icon="bi-camera-video" deactivated />
 				<Card route="location" type="Localização" icon="bi-geo-alt" />

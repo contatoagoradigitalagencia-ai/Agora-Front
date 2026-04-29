@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE ENVIA A MENSAGEM PRONTA DE TODOS OS TIPOS PARA O SERVIDOR

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 /**
  * @author VAMPETA
- * @brief FUNCAO QUE SELECIONA O ARQUIVO A SEER ENVIADO
+ * @brief FUNCAO QUE SELECIONA O ARQUIVO A SER ENVIADO
  * @param {Object} e INFORMACOES SOBRE O INPUT
  * @param {Function} setFile FUNCAO QUE SALVA O ARQUIVO EM file
  * @param {Function} onChange FUNCAO DE MUDANCA DO INPUT
@@ -17,7 +17,6 @@ function handleSelect(e, setFile, onChange) {
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE REMOVE O ARQUIVO QUE JA FOI SELECIONADO
- * @param {Object} e INFORMACOES SOBRE O INPUT
  * @param {Function} setFile FUNCAO QUE SALVA O ARQUIVO EM file
  * @param {Function} onChange FUNCAO DE MUDANCA DO INPUT
  */
@@ -28,7 +27,7 @@ function handleRemove(setFile, onChange) {
 
 /**
  * @author VAMPETA
- * @brief COMPONENTE DE UPLOAD DE IMAGEM COM REMOCAO
+ * @brief COMPONENTE DE UPLOAD DE ARQUIVO COM REMOCAO
  * @param {Function} onChange RETORNA O ARQUIVO SELECIONADO
  * @param {string} accept TIPOS ACEITOS
  */
@@ -37,27 +36,16 @@ export default function FileUpload({ onChange, accept }) {
 
 	return (
 		<div className="flex flex-col gap-2">
-
-			{/* BOTAO */}
-			<label className="flex items-center justify-center gap-2 cursor-pointer text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm hover:bg-zinc-700 transition">
-				<i className="bi bi-image text-lg" />
-				Selecionar imagem
-				<input type="file" accept={accept} className="hidden" onChange={(e) => handleSelect(e, setFile, onChange)} />
+			<label className={`flex items-center justify-center gap-2 cursor-pointer border rounded p-2 text-sm transition ${(file) ? "bg-orange-500/10 border-orange-500 text-orange-400 hover:bg-orange-500/20" : "bg-zinc-800 border-zinc-700 text-white hover:bg-zinc-700"}`}>
+				<i className={`bi ${(file) ? "bi-check-circle" : "bi-image"} text-lg`} />
+				<span className="truncate">{file ? "Arquivo selecionada" : "Selecionar arquivo"}</span>
+				<input className="hidden" type="file" accept={accept} onChange={(e) => handleSelect(e, setFile, onChange)} />
 			</label>
-
-			{/* ARQUIVO SELECIONADO */}
 			{file && (
-				<div className="flex flex-col gap-2">
-					<div className="flex items-center gap-2 bg-zinc-800 border border-zinc-700 rounded px-3 py-2">
-						<i className="bi bi-file-earmark-image text-zinc-400" />
-						<span className="text-xs text-zinc-300 truncate flex-1">{file.name}</span>
-						<button className="text-zinc-500 hover:text-red-500 transition" onClick={() => handleRemove(setFile, onChange)}>
-							<i className="bi bi-x-lg text-xs" />
-						</button>
-					</div>
-				</div>
+				<button className="bg-orange-500 text-black w-full rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleRemove(setFile, onChange)}>
+					Remover arquivo
+				</button>
 			)}
-
 		</div>
 	);
 }

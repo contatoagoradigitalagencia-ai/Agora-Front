@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useQuickMessages } from "./useQuickMessages.js";
 
 import Text from "./Text.jsx";
+import Audio from "./Audio.jsx";
 import Location from "./Locatioin.jsx";
 import Image from "./Image.jsx";
 
@@ -17,11 +18,13 @@ import { sendReadyMessage } from "./sendReadyMessage.js";
 function Message({ message }) {
 	switch (message.type) {
 		case "text":
-			return <Text message={message} />;
+			return (<Text message={message} />);
+		case "audio":
+			return (<Audio message={message} />);
 		case "image":
-			return <Image message={message} />;
+			return (<Image message={message} />);
 		case "location":
-			return <Location message={message} />;
+			return (<Location message={message} />);
 		default:
 			return (<p className="text-red-900"><i>Mensagem do tipo <b>{message.type}</b> não suportada</i></p>);
 	}

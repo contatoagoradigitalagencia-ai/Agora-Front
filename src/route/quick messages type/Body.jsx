@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useGetQuickText } from "./useGetQuickText.js";
+import { useGetQuickMessage } from "./useGetQuickMessage.js";
 
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
@@ -15,7 +15,7 @@ import Editor from "./Editor.jsx";
 */
 export default function Body({ socket }) {
 	const { type } = useParams();
-	const { messages, setMessages, loading, error } = useGetQuickText(socket, type);
+	const { messages, setMessages, loading, error } = useGetQuickMessage(socket, type);
 	const [selectedMessage, setSelectedMessage] = useState(null);
 	const [view, setView] = useState("list");
 	const [search, setSearch] = useState("");
@@ -25,7 +25,7 @@ export default function Body({ socket }) {
 	if (error) return (<Error />);
 	if (loading) return (<Load />);
 	return (
-		<div className="flex flex-col xl:flex-row gap-4 p-4 sm:p-6 xl:gap-6 h-full min-h-0 overflow-hidden">
+		<div className="flex flex-col lg:flex-row gap-4 p-4 sm:p-6 lg:gap-6 h-full min-h-0 overflow-hidden">
 			<List socket={socket} messages={messages} setMessages={setMessages} selectedMessage={selectedMessage} setSelectedMessage={setSelectedMessage} view={view} setView={setView} search={search} setSearch={setSearch} selected={selected} filteredMessages={filteredMessages} />
 			<Editor socket={socket} messages={messages} setMessages={setMessages} selectedMessage={selectedMessage} setSelectedMessage={setSelectedMessage} view={view} setView={setView} search={search} setSearch={setSearch} selected={selected} filteredMessages={filteredMessages} />
 		</div>

@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
  * @param {String} type TIPO DA MENSAGEM
 */
-export function useGetQuickText(socket, type) {
+export function useGetQuickMessage(socket, type) {
 	const [messages, setMessages] = useState([]);
 	const [error, setError] = useState(false);
 	const [loading, setLoading] = useState(true);

@@ -1,14 +1,19 @@
-import axios from "axios";
 import toast from "react-hot-toast";
-import Cookies from "js-cookie";
 
-import server from "../../server.js";
+import { uploadFile } from "../../utils/functions/uploadFile.js";
 
 const messageType = {
 	text: {
 		type: "text",
 		text: {
 			body: ""
+		}
+	},
+	audio: {
+		type: "audio",
+		audio: {
+			link: "",
+			voice: true
 		}
 	},
 	image: {
@@ -40,14 +45,14 @@ const messageType = {
 */
 export function handleNew(type, setMessages, setSelectedMessage, setView) {
 	const newId = (typeof crypto !== "undefined" && crypto.randomUUID) ? crypto.randomUUID() : `id-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-	const newMsgText = {
+	const newMessage = {
 		name: "Nova mensagem",
 		id: newId,
 		isNew: true,
 		message: messageType[type]
 	};
 
-	setMessages((prev) => ([newMsgText, ...prev]));
+	setMessages((prev) => ([newMessage, ...prev]));
 	setSelectedMessage(newId);
 	setView("editor");
 }
@@ -149,29 +154,22 @@ export function handleCancel(selected, setMessages, setSelectedMessage, setView)
  * @param {object} selected INFORMACOES DA MENSAGEM SELECIONADA
 */
 async function processMessage(selected) {
+	let url = null;
+
 	switch (selected.message.type) {
+		case "audio":
+			if (!selected.message.audio.file) return ;
+			url = await uploadFile(selected.message.audio.file);
+			if (!url) return (toast.error("Erro ao salvar audio"));
+			selected.message.audio.link = url;
+			delete selected.message.audio.file;
+			break;
 		case "image":
 			if (!selected.message.image.file) return ;
-			const formData = new FormData();
-			formData.append("file", selected.message.image.file);
-			try {
-				const token = Cookies.get("token");
-				if (!token) return (toast.error("Erro ao salvar imagem"));
-				const res = await axios({
-					method: "POST",
-					url: `${server}/upload`,
-					headers: {
-						Authorization: `Bearer ${token}`,
-						"Content-Type": "multipart/form-data"
-					},
-					data: formData
-				});
-				if (res.status !== 200) return (toast.error("Erro ao salvar imagem"));
-				selected.message.image.link = res.data.url;
-				delete selected.message.image.file;
-			} catch (error) {
-				return (toast.error("Erro ao salvar imagem"));
-			}
+			url = await uploadFile(selected.message.image.file);
+			if (!url) return (toast.error("Erro ao salvar imagem"));
+			selected.message.image.link = url;
+			delete selected.message.image.file;
 			break;
 		case "location":
 			selected.message.location.latitude = parseFloat(selected.message.location.latitude);
