@@ -54,7 +54,7 @@ export default function Body({ socket }) {
 				<Card route="video" type="Vídeo" icon="bi-camera-video" deactivated />
 				<Card route="location" type="Localização" icon="bi-geo-alt" />
 				<Card route="contact" type="Contato" icon="bi-person-lines-fill" deactivated/>
-				<Card route="document" type="Documento" icon="bi-file-earmark" deactivated />
+				<Card route="document" type="Documento" icon="bi-file-earmark" />
 				<Card route="button" type="Botões" icon="bi-ui-checks" deactivated />
 				<Card route="list" type="Lista" icon="bi-list-ul" deactivated />
 				<Card route="template" type="Template" icon="bi-layout-text-window" deactivated />

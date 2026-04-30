@@ -32,6 +32,14 @@ const messageType = {
 			latitude: "",
 			longitude: ""
 		}
+	},
+	document: {
+		type: "document",
+		document: {
+			link: "",
+			filename: "",
+			caption: ""
+		}
 	}
 }
 
@@ -174,6 +182,14 @@ async function processMessage(selected) {
 		case "location":
 			selected.message.location.latitude = parseFloat(selected.message.location.latitude);
 			selected.message.location.longitude = parseFloat(selected.message.location.longitude);
+			break;
+		case "document":
+			if (!selected.message.document.file) return ;
+			url = await uploadFile(selected.message.document.file);
+			if (!url) return (toast.error("Erro ao salvar documento"));
+			selected.message.document.link = url;
+			selected.message.document.filename = selected.message.document.file.name;
+			delete selected.message.document.file;
 			break;
 	}
 }

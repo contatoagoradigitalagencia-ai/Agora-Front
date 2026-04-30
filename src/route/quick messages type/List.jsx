@@ -66,6 +66,7 @@ export default function List({ socket, messages, setMessages, selectedMessage, s
 						{msg.message.type === "audio" && <ContentList name={msg.name} preview="Áudio" />}
 						{msg.message.type === "image" && <ContentList name={msg.name} preview="Foto" />}
 						{msg.message.type === "location" && <ContentList name={msg.name} preview={msg.message.location.name} />}
+						{msg.message.type === "document" && <ContentList name={msg.name} preview={msg.message.document.filename} />}
 					</div>
 				))}
 			</div>

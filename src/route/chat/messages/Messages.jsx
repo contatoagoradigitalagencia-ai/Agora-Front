@@ -17,7 +17,7 @@ import Video from "./Video.jsx";
 import Location from "./Location.jsx";
 import Contacts from "./Contacts.jsx";
 import Reaction from "./Reaction.jsx";
-import Document from "./document.jsx";
+import Document from "./Document.jsx";
 
 /**
  * @author VAMPETA

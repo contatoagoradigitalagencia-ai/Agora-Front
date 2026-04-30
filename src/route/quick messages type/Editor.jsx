@@ -85,6 +85,22 @@ function FieldsLocation({ content, setMessages, selectedMessage }) {
 
 /**
  * @author VAMPETA
+ * @brief COMPONENTE RESPONSAVEL PELO CONTEUDO DA LISTA DE MENSAGENS DO TIPO DOCUMENT
+ * @param {Object} content INFORMACOES DA MENSAGEM
+ * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
+ * @param {Number} selectedMessage ID DA MENSAGEM ATUALMENTE SELECIONADA
+*/
+function FieldsDocument({ content, setMessages, selectedMessage }) {
+	return (
+		<>
+			<FileUpload accept="*" onChange={(file) => handleUpdateFields("file", file, setMessages, selectedMessage)} />
+			<textarea className="text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm min-h-[140px] outline-none" value={content.message.document.caption ?? ""} placeholder="Digite a mensagem..." onChange={(e) => handleUpdateFields("caption", e.target.value, setMessages, selectedMessage)} />
+		</>
+	);
+}
+
+/**
+ * @author VAMPETA
  * @brief COMPONENTE RESPONSAVEL PELO EDITOR DA MENSAGEM (POR ENQUANTO AINDA EXISTE PREVIEW MAS ACHO QUE VOU REMOVER)
  * @param {Hook} socket SOCKET DE CONEXAO COM O BACK END
 */
@@ -111,6 +127,7 @@ export default function Editor({ socket, messages, setMessages, selectedMessage,
 					{selected.message.type === "audio" && <FieldsAudio content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
 					{selected.message.type === "image" && <FieldsImage content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
 					{selected.message.type === "location" && <FieldsLocation content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
+					{selected.message.type === "document" && <FieldsDocument content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
 					<div className="flex justify-center gap-5">
 						<button className="bg-orange-500 text-black w-full rounded p-2 text-sm hover:opacity-90 transition cursor-pointer" onClick={() => handleCancel(selected, setMessages, setSelectedMessage, setView)}>
 							Cancelar

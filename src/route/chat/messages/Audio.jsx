@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import { usePlayer } from "./usePlayer.js";
+import { usePlayerAudio } from "../../../utils/hooks/usePlayerAudio.js";
 
 import { download } from "../../../utils/functions/download.js";
 
@@ -24,12 +24,8 @@ function formatTime(time) {
  * @param {Function} setPlaying FUNCAO RESPONSAVEL POR ATUALIZAR O ESTADO DE REPRODUCAO
 */
 function togglePlay(audioRef, playing, setPlaying) {
-	if (!audioRef.current) return;
-	if (playing) {
-		audioRef.current.pause();
-	} else {
-		audioRef.current.play();
-	}
+	if (!audioRef.current) return ;
+	(playing) ? audioRef.current.pause() : audioRef.current.play();
 	setPlaying(!playing);
 };
 
@@ -74,13 +70,13 @@ function toggleSpeed(audioRef, playbackRate, setPlaybackRate) {
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
 const Audio = memo(function Audio({ message }) {
-	const { audioRef, playing, setPlaying, progress, duration, currentTime, playbackRate, setPlaybackRate } = usePlayer();
+	const { audioRef, playing, setPlaying, progress, duration, currentTime, playbackRate, setPlaybackRate } = usePlayerAudio();
 	const src = (message.direction === "outbound") ? message.data.audio.link : message.data.audio.url;
 
 	return (
 		<div className="flex items-center gap-3 bg-orange-500 rounded-xl px-4 py-5 w-[70vw]">
 			<audio ref={audioRef} src={src} preload="metadata" />
-			<button className="flex items-center justify-center bg-white text-orange-500 rounded-full w-8 h-8" onClick={() => togglePlay(audioRef, playing, setPlaying)}>
+			<button className="flex items-center justify-center bg-white text-orange-500 rounded-full w-8 h-8 cursor-pointer" onClick={() => togglePlay(audioRef, playing, setPlaying)}>
 				{(playing) ? (
 					<i className="bi bi-pause-fill text-xl" />
 				) : (

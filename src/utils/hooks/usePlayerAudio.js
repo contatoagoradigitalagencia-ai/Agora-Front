@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
  * @author VAMPETA
  * @brief HOOK QUE CONTROLA O PLAYER DO AUDIO
 */
-export function usePlayer() {
+export function usePlayerAudio() {
 	const audioRef = useRef(null);
 	const [playing, setPlaying] = useState(false);
 	const [progress, setProgress] = useState(0);

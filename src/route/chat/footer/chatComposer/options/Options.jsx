@@ -5,8 +5,9 @@ import { useQuickMessages } from "./useQuickMessages.js";
 
 import Text from "./Text.jsx";
 import Audio from "./Audio.jsx";
-import Location from "./Locatioin.jsx";
 import Image from "./Image.jsx";
+import Location from "./Locatioin.jsx";
+import Document from "./Document.jsx";
 
 import { sendReadyMessage } from "./sendReadyMessage.js";
 
@@ -25,6 +26,8 @@ function Message({ message }) {
 			return (<Image message={message} />);
 		case "location":
 			return (<Location message={message} />);
+		case "document":
+			return (<Document message={message} />);
 		default:
 			return (<p className="text-red-900"><i>Mensagem do tipo <b>{message.type}</b> não suportada</i></p>);
 	}
@@ -43,7 +46,8 @@ export default function Options({ socket }) {
 		{ label: "Texto", value: "text", icon: "bi-chat-left-text" },
 		{ label: "Áudio", value: "audio", icon: "bi-mic" },
 		{ label: "Imagem", value: "image", icon: "bi-image" },
-		{ label: "Localização", value: "location", icon: "bi-geo-alt" }
+		{ label: "Localização", value: "location", icon: "bi-geo-alt" },
+		{ label: "Documento", value: "document", icon: "bi-file-earmark-text" }
 	];
 
 	return (
