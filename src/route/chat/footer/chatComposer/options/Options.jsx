@@ -65,7 +65,7 @@ export default function Options({ socket }) {
 			{type && (
 				<div className="fixed inset-0 z-50 flex flex-col items-center justify-center">
 					<div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setType(null)} />
-					<div className="flex flex-col relative w-[90%] h-[90%] max-w-2xl bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden animate-[fadeIn_.2s_ease]">
+					<div className="flex flex-col relative w-[90%] h-[90%] max-w-2xl bg-zinc-900 rounded-2xl shadow-2xl overflow-hidden animate-toastIn">
 						<button className="absolute top-4 right-4 text-white hover:text-orange-500 cursor-pointer" onClick={() => setType(null)}>
 							<i className="bi bi-x-lg text-3xl" />
 						</button>
