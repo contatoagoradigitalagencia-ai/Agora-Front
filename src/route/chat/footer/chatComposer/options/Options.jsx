@@ -7,7 +7,7 @@ import Text from "./Text.jsx";
 import Audio from "./Audio.jsx";
 import Image from "./Image.jsx";
 import Location from "./Locatioin.jsx";
-import Document from "./Document.jsx";
+import Document from "./Document2.jsx";
 
 import { sendReadyMessage } from "./sendReadyMessage.js";
 
