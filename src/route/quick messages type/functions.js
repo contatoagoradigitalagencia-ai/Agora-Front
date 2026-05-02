@@ -24,6 +24,14 @@ const messageType = {
 			file: File
 		}
 	},
+	video: {
+		type: "video",
+		video: {
+			link: "",
+			caption: "",
+			file: File
+		}
+	},
 	location: {
 		type: "location",
 		location: {
@@ -178,6 +186,13 @@ async function processMessage(selected) {
 			if (!url) return (toast.error("Erro ao salvar imagem"));
 			selected.message.image.link = url;
 			delete selected.message.image.file;
+			break;
+		case "video":
+			if (!selected.message.video.file) return ;
+			url = await uploadFile(selected.message.video.file);
+			if (!url) return (toast.error("Erro ao salvar vídeo"));
+			selected.message.video.link = url;
+			delete selected.message.video.file;
 			break;
 		case "location":
 			selected.message.location.latitude = parseFloat(selected.message.location.latitude);

@@ -65,6 +65,22 @@ function FieldsImage({ content, setMessages, selectedMessage }) {
 
 /**
  * @author VAMPETA
+ * @brief COMPONENTE RESPONSAVEL PELO CONTEUDO DA LISTA DE MENSAGENS DO TIPO VIDEO
+ * @param {Object} content INFORMACOES DA MENSAGEM
+ * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
+ * @param {Number} selectedMessage ID DA MENSAGEM ATUALMENTE SELECIONADA
+*/
+function FieldsVideo({ content, setMessages, selectedMessage }) {
+	return (
+		<>
+			<FileUpload accept="video/mp4" onChange={(file) => handleUpdateFields("file", file, setMessages, selectedMessage)} />
+			<textarea className="text-white bg-zinc-800 border border-zinc-700 rounded p-2 text-sm min-h-[140px] outline-none" value={content.message.video.caption ?? ""} placeholder="Digite a mensagem..." onChange={(e) => handleUpdateFields("caption", e.target.value, setMessages, selectedMessage)} />
+		</>
+	);
+}
+
+/**
+ * @author VAMPETA
  * @brief COMPONENTE RESPONSAVEL PELO CONTEUDO DA LISTA DE MENSAGENS DO TIPO LOCATION
  * @param {Object} content INFORMACOES DA MENSAGEM
  * @param {Function} setMessages ATUALIZA A LISTA DE MENSAGENS NO ESTADO
@@ -126,6 +142,7 @@ export default function Editor({ socket, messages, setMessages, selectedMessage,
 					{selected.message.type === "text" && <FieldsText content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
 					{selected.message.type === "audio" && <FieldsAudio content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
 					{selected.message.type === "image" && <FieldsImage content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
+					{selected.message.type === "video" && <FieldsVideo content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
 					{selected.message.type === "location" && <FieldsLocation content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
 					{selected.message.type === "document" && <FieldsDocument content={selected} setMessages={setMessages} selectedMessage={selectedMessage} />}
 					<div className="flex justify-center gap-5">

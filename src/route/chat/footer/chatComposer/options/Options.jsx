@@ -6,6 +6,7 @@ import { useQuickMessages } from "./useQuickMessages.js";
 import Text from "./Text.jsx";
 import Audio from "./Audio.jsx";
 import Image from "./Image.jsx";
+import Video from "./Video.jsx";
 import Location from "./Locatioin.jsx";
 import Document from "./Document.jsx";
 
@@ -24,6 +25,8 @@ function Message({ message }) {
 			return (<Audio message={message} />);
 		case "image":
 			return (<Image message={message} />);
+		case "video":
+			return (<Video message={message} />);
 		case "location":
 			return (<Location message={message} />);
 		case "document":
@@ -46,6 +49,7 @@ export default function Options({ socket }) {
 		{ label: "Texto", value: "text", icon: "bi-chat-left-text" },
 		{ label: "Áudio", value: "audio", icon: "bi-mic" },
 		{ label: "Imagem", value: "image", icon: "bi-image" },
+		{ label: "Vídeo", value: "video", icon: "bi-film" },
 		{ label: "Localização", value: "location", icon: "bi-geo-alt" },
 		{ label: "Documento", value: "document", icon: "bi-file-earmark-text" }
 	];
