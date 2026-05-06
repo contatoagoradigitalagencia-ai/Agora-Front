@@ -74,30 +74,33 @@ const Audio = memo(function Audio({ message }) {
 	const src = (message.direction === "outbound") ? message.data.audio.link : message.data.audio.url;
 
 	return (
-		<div className="flex items-center gap-3 bg-orange-500 rounded-xl px-4 py-5 w-[70vw]">
-			<audio ref={audioRef} src={src} preload="metadata" />
-			<button className="flex items-center justify-center bg-white text-orange-500 rounded-full w-8 h-8 cursor-pointer" onClick={() => togglePlay(audioRef, playing, setPlaying)}>
-				{(playing) ? (
-					<i className="bi bi-pause-fill text-xl" />
-				) : (
-					<i className="bi bi-play-fill text-xl" />
-				)}
-			</button>
-			<div className="flex flex-col flex-1">
-				<div className="w-full h-2 bg-orange-200 rounded cursor-pointer" onClick={(e) => handleSeek(e, audioRef)}>
-					<div className="h-2 bg-white rounded" style={{ width: `${progress}%` }} />
+		<>
+			<div className="flex items-center gap-3 bg-orange-500 rounded-xl px-4 py-5 w-[70vw]">
+				<audio ref={audioRef} src={src} preload="metadata" />
+				<button className="flex items-center justify-center bg-white text-orange-500 rounded-full w-8 h-8 cursor-pointer" onClick={() => togglePlay(audioRef, playing, setPlaying)}>
+					{(playing) ? (
+						<i className="bi bi-pause-fill text-xl" />
+					) : (
+						<i className="bi bi-play-fill text-xl" />
+					)}
+				</button>
+				<div className="flex flex-col flex-1">
+					<div className="w-full h-2 bg-orange-200 rounded cursor-pointer" onClick={(e) => handleSeek(e, audioRef)}>
+						<div className="h-2 bg-white rounded" style={{ width: `${progress}%` }} />
+					</div>
+					<div className="flex justify-between text-xs text-white mt-1">
+						{`${formatTime(currentTime)}/${formatTime(duration)}`}
+					</div>
 				</div>
-				<div className="flex justify-between text-xs text-white mt-1">
-					{`${formatTime(currentTime)}/${formatTime(duration)}`}
-				</div>
+				<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => toggleSpeed(audioRef, playbackRate, setPlaybackRate)}>
+					{playbackRate}x
+				</button>
+				<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => download(src, "audio.mp3")}>
+					<i className="bi bi-download text-xl" />
+				</button>
 			</div>
-			<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => toggleSpeed(audioRef, playbackRate, setPlaybackRate)}>
-				{playbackRate}x
-			</button>
-			<button className="w-12 h-10 bg-white text-orange-500 cursor-pointer rounded" onClick={() => download(src, "audio.mp3")}>
-				<i className="bi bi-download text-xl" />
-			</button>
-		</div>
+			<p className="my-1">{message.data.audio.transcribe}</p>
+		</>
 	);
 });
 

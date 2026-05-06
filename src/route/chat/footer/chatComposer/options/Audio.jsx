@@ -50,28 +50,31 @@ const Audio = memo(function Audio({ message }) {
 	const { audioRef, playing, setPlaying, progress, duration, currentTime, playbackRate, setPlaybackRate } = usePlayerAudio();
 
 	return (
-		<div className="flex items-center gap-3 bg-orange-500 rounded-xl px-4 py-5 w-full">
-			<audio ref={audioRef} src={message.audio.link} preload="metadata" />
-			<button className="flex items-center justify-center bg-white text-orange-500 rounded-full w-8 h-8 cursor-pointer" onClick={(e) => { e.stopPropagation(), togglePlay(audioRef, playing, setPlaying) }}>
-				{(playing) ? (
-					<i className="bi bi-pause-fill text-xl" />
-				) : (
-					<i className="bi bi-play-fill text-xl" />
-				)}
-			</button>
-			<div className="flex flex-col flex-1">
-				<div className="w-full h-2 bg-orange-200 rounded cursor-pointer" onClick={(e) => { e.stopPropagation(), handleSeek(e, audioRef) }}>
-					<div className="h-2 bg-white rounded" style={{ width: `${progress}%` }} />
-				</div>
-				<div className="flex justify-between text-xs text-white mt-2">
-					{`${formatTime(currentTime)}/${formatTime(duration)}`}
-					<span className="text-white text-xs font-medium">
-						{(message.audio?.voice) ? "Mensagem de voz" : "Áudio"}
-						<i className={`bi ${(message.audio?.voice) ? "bi-mic-fill" : "bi-volume-up-fill"} text-white pl-1`} />
-					</span>
+		<>
+			<div className="flex items-center gap-3 bg-orange-500 rounded-xl px-4 py-5 w-full">
+				<audio ref={audioRef} src={message.audio.link} preload="metadata" />
+				<button className="flex items-center justify-center bg-white text-orange-500 rounded-full w-8 h-8 cursor-pointer" onClick={(e) => { e.stopPropagation(), togglePlay(audioRef, playing, setPlaying) }}>
+					{(playing) ? (
+						<i className="bi bi-pause-fill text-xl" />
+					) : (
+						<i className="bi bi-play-fill text-xl" />
+					)}
+				</button>
+				<div className="flex flex-col flex-1">
+					<div className="w-full h-2 bg-orange-200 rounded cursor-pointer" onClick={(e) => { e.stopPropagation(), handleSeek(e, audioRef) }}>
+						<div className="h-2 bg-white rounded" style={{ width: `${progress}%` }} />
+					</div>
+					<div className="flex justify-between text-xs text-white mt-2">
+						{`${formatTime(currentTime)}/${formatTime(duration)}`}
+						<span className="text-white text-xs font-medium">
+							{(message.audio?.voice) ? "Mensagem de voz" : "Áudio"}
+							<i className={`bi ${(message.audio?.voice) ? "bi-mic-fill" : "bi-volume-up-fill"} text-white pl-1`} />
+						</span>
+					</div>
 				</div>
 			</div>
-		</div>
+			<p className="my-1">{message.audio?.transcribe}</p>
+		</>
 	);
 });
 
