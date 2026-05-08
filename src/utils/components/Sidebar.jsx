@@ -27,6 +27,10 @@ function SidebarContent({ close }) {
 						<i className="bi bi-whatsapp text-xl" />
 						<span>Conversas</span>
 					</Link>
+					<Link className={`flex items-center gap-1 px-4 py-2 rounded-lg ${(location.pathname === "/human-service") ? "bg-orange-500 text-black" : "hover:bg-zinc-800"}`} to="/human-service" onClick={close}>
+						<i className="bi bi-hourglass-split text-xl" />
+						<span>Atendimento humano</span>
+					</Link>
 					<Link className={`flex items-center gap-1 px-4 py-2 rounded-lg ${(location.pathname === "/contacts") ? "bg-orange-500 text-black" : "hover:bg-zinc-800"}`} to="/contacts" onClick={close}>
 						<i className="bi bi-telephone text-xl" />
 						<span>Contatos</span>

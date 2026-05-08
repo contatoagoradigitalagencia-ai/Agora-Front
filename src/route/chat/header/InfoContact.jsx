@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 /**
  * @author VAMPETA
  * @brief FUNCAO QUE CONSULTA OU MODIFICA SE O BOT ESTA ATIVO
@@ -8,7 +10,9 @@
 async function botOnOff(socket, contact, setContact) {
 	if (!socket) return ;
 	socket.emit("chat:bot:on_off", { phone: contact.phone, stateBot: !contact.bot }, (res) => {
-		if ("stateBot" in res) setContact((prev) => ({ ...prev, bot: res.stateBot }));
+		if (res !== 204) return (toast.error(`Erro ao ${(contact.bot) ? "desativar" : "ativar"} bot!`));
+		setContact((prev) => ({ ...prev, bot: !prev.bot }));
+		toast.success(`Bot ${(contact.bot) ? "desativado" : "ativado"}!`);
 	});
 }
 

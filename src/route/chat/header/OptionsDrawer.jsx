@@ -27,12 +27,6 @@ export default function OptionsDrawer({ socket, selected, onClose }) {
 				<div className="flex flex-col gap-6">
 					<InfoContact socket={socket} contact={contact} setContact={setContact} loading={loading} />
 					<Comment socket={socket} contact={contact} setContact={setContact} loading={loading} />
-					{/* <Link className="flex items-center gap-1 px-4 py-2 rounded-lg bg-orange-500 text-black hover:text-white hover:bg-zinc-800" to="" onClick={onClose}>
-						<span>Mostrar contato</span>
-					</Link>
-					<Link className="flex items-center gap-1 px-4 py-2 rounded-lg bg-orange-500 text-black hover:text-white hover:bg-zinc-800" to="" onClick={onClose}>
-						<span>Bloquear</span>
-					</Link> */}
 				</div>
 			</div>
 		</div>

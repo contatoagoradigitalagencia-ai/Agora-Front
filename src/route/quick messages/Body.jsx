@@ -35,7 +35,6 @@ function Card({ route, type, icon, deactivated }) {
 export default function Body({ socket }) {
 	return (
 		<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
-			{/* INTRO */}
 			<div className="flex flex-col gap-3 bg-zinc-900 border border-zinc-800 rounded-lg p-4">
 				<h2 className="text-lg font-semibold">Mensagens rápidas</h2>
 				<p className="text-sm text-zinc-400">Crie mensagens prontas para agilizar seu atendimento. Escolha um tipo abaixo para começar.</p>
@@ -45,7 +44,6 @@ export default function Body({ socket }) {
 					<li>Padronize respostas frequentes</li>
 				</ul>
 			</div>
-			{/* CARDS */}
 			<div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
 				<Card route="text" type="Texto" icon="bi-chat-dots" />
 				<Card route="sticker" type="Figurinha" icon="bi-emoji-smile" deactivated />
