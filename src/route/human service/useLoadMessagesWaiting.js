@@ -16,5 +16,5 @@ export function useLoadMessagesWaiting(socket) {
 			setChats(res);
 		});
 	}, [socket]);
-	return ({ chats, error });
+	return ({ chats, setChats, error });
 }

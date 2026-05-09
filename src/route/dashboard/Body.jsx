@@ -107,7 +107,7 @@ export default function Body({ socket }) {
 					<h2 className="text-base md:text-lg font-semibold mb-1">Em espera de atendimento humanizado</h2>
 					<p className="text-zinc-400 text-xs md:text-sm">Veja os contatos aguardando atendimento humano.</p>
 				</div>
-				<Link className="w-full md:w-auto text-center px-6 py-2 bg-orange-500 text-black rounded-lg font-medium hover:bg-orange-400 transition" to="/chat">
+				<Link className="w-full md:w-auto text-center px-6 py-2 bg-orange-500 text-black rounded-lg font-medium hover:bg-orange-400 transition" to="/human-service">
 					Abrir
 				</Link>
 			</div>

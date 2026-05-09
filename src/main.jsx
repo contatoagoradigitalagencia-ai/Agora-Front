@@ -14,7 +14,7 @@ import Login from "./route/login/Login.jsx";
 import Dashboard from "./route/dashboard/Dashboard.jsx";
 import Chats from "./route/chats/Chats.jsx";
 import Chat from "./route/chat/Chat.jsx";
-import HumanService from "./route/human service/aHumanService.jsx";
+import HumanService from "./route/human service/HumanService.jsx";
 import Contacts from "./route/contacts/Contacts.jsx";
 import QuickMessages from "./route/quick messages/QuickMessages.jsx";
 import QuickMessagesType from "./route/quick messages type/QuickMessagesType.jsx";

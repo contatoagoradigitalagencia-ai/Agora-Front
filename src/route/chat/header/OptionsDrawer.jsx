@@ -4,6 +4,7 @@ import { useGetContact } from "./useGetContact.js";
 
 import InfoContact from "./InfoContact.jsx";
 import Comment from "./Comment.jsx";
+import HumanService from "./HumanService.jsx";
 
 /**
  * @author VAMPETA
@@ -22,11 +23,12 @@ export default function OptionsDrawer({ socket, selected, onClose }) {
 			<div className="absolute inset-0 bg-black/60" onClick={onClose} />
 			<div className="ml-auto w-full md:w-[400px] h-full bg-zinc-900 border-l border-zinc-800 p-6 z-1 animate-slideInRight">
 				<button className="mb-4 cursor-pointer" onClick={onClose}>
-					<i className="bi bi-x text-2xl" />
+					<i className="bi bi-x text-4xl" />
 				</button>
 				<div className="flex flex-col gap-6">
 					<InfoContact socket={socket} contact={contact} setContact={setContact} loading={loading} />
 					<Comment socket={socket} contact={contact} setContact={setContact} loading={loading} />
+					<HumanService socket={socket} contact={contact} setContact={setContact} loading={loading} />
 				</div>
 			</div>
 		</div>

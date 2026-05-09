@@ -1,9 +1,28 @@
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { useLoadMessagesWaiting } from "./useLoadMessagesWaiting.js";
 
 import Load from "../../screens/Load.jsx";
 import Error from "../../screens/Error.jsx";
+
+import { formatDate } from "../../utils/functions/formatDate.js";
+
+/**
+ * @author VAMPETA
+ * @brief FUNCAO QUE CONSULTA OU MODIFICA SE O BOT ESTA ATIVO
+ * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
+ * @param {String} phone NUMERO DO CONTATO QUE FOI ATENDIDO
+ * @param {Funciton} setChats FUNCAO MODIFICADORA DA LISTA DE CONTATOS
+*/
+function removeWaitingService(socket, phone, setChats) {
+	if (!socket) return ;
+	socket.emit("human-service:remove_waiting_service", { phone: phone }, (res) => {
+		if (res !== 204) return (toast.error("Erro ao remover contato da lista de espera para atendimento!"));
+		setChats((prev) => prev.filter((chat) => (chat.phone !== phone)));
+		toast.success("Contato removido da lista de espera de atendimento!");
+	});
+}
 
 /**
  * @author VAMPETA
@@ -11,7 +30,7 @@ import Error from "../../screens/Error.jsx";
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
 */
 export default function Body({ socket }) {
-	const { chats, error } = useLoadMessagesWaiting(socket);
+	const { chats, setChats, error } = useLoadMessagesWaiting(socket);
 
 	if (error) return (<Error />);
 	if (chats === null) return (<Load />);
@@ -26,9 +45,15 @@ export default function Body({ socket }) {
 	return (
 		<div className="flex-1 overflow-y-auto px-1 animate-toastIn">
 			{chats.map((chat) => (
-				<Link className="flex justify-center w-full h-20 my-3 px-6 bg-zinc-900 rounded border border-zinc-800 text-white flex flex-col hover:bg-orange-600 transition" key={chat.phone} to={`/chat/${chat.phone}`}>
-					<p>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</p>
-				</Link>
+				<div className="flex justify-between items-center w-full h-20 my-3 bg-zinc-900 rounded border border-zinc-800 text-white transition" key={chat.phone}>
+					<Link className="flex flex-col justify-center w-[70%] md:w-[80%] h-full px-6 gap-2 hover:bg-orange-500" to={`/chat/${chat.phone}`}>
+						<p>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</p>
+						<span className="text-xs text-gray-400">{formatDate(chat.timestamp)}</span>
+					</Link>
+					<button className="flex flex-col justify-center items-center w-[30%] md:w-[20%] h-full px-6 hover:bg-orange-500 cursor-pointer" onClick={() => removeWaitingService(socket, chat.phone, setChats)}>
+						<i className="bi bi-check-square text-4xl" />
+					</button>
+				</div>
 			))}
 		</div>
 	);
