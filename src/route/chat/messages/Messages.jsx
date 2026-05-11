@@ -18,6 +18,7 @@ import Location from "./Location.jsx";
 import Contacts from "./Contacts.jsx";
 import Reaction from "./Reaction.jsx";
 import Document from "./Document.jsx";
+import Interactive from "./interactive/Interactive.jsx";
 
 /**
  * @author VAMPETA
@@ -42,6 +43,8 @@ function Message({ message }) {
 			return (<Contacts message={message} />);
 		case "document":
 			return (<Document message={message} />);
+		case "interactive":
+			return (<Interactive message={message} />);
 		default:
 			return (<p className="text-red-900"><i>Mensagem do tipo <b>{(message.data?.type) ? message.data?.type : "desconhecida"}</b> não suportada</i></p>);
 	}

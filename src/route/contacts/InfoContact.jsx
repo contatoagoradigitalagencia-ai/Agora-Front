@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 */
 async function botOnOff(socket, contact, setContact) {
 	if (!socket) return ;
-	socket.emit("chat:bot:on_off", { phone: contact.phone, stateBot: !contact.bot }, (res) => {
+	socket.emit("chat:on_off", { phone: contact.phone, stateBot: !contact.bot }, (res) => {
 		if (res !== 204) return (toast.error(`Erro ao ${(contact.bot) ? "desativar" : "ativar"} bot!`));
 		setContact((prev) => ({ ...prev, bot: !prev.bot }));
 		toast.success(`Bot ${(contact.bot) ? "desativado" : "ativado"}!`);
