@@ -7,7 +7,7 @@ import NewPassword from "./NewPassword";
 */
 export default function Body({ socket }) {
 	return (
-		<div className="p-6 flex flex-col gap-6 max-w-4xl overflow-y-auto animate-toastIn">
+		<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
 			<NewPassword socket={socket} />
 		</div>
 	);

@@ -50,9 +50,11 @@ export default function Body({ socket }) {
 						<p>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</p>
 						<span className="text-xs text-gray-400">{formatDate(chat.timestamp)}</span>
 					</Link>
-					<button className="flex flex-col justify-center items-center w-[30%] md:w-[20%] h-full px-6 hover:bg-orange-500 cursor-pointer" onClick={() => removeWaitingService(socket, chat.phone, setChats)}>
-						<i className="bi bi-check-square text-4xl" />
-					</button>
+					<div className="flex flex-col justify-center items-center w-[30%] md:w-[20%] h-full px-6" onClick={() => removeWaitingService(socket, chat.phone, setChats)}>
+						<button className="w-full md:w-auto text-center px-6 py-2 bg-orange-500 text-black rounded-lg font-medium hover:bg-orange-400 transition cursor-pointer" to="/human-service">
+							Encerrar
+						</button>
+					</div>
 				</div>
 			))}
 		</div>
