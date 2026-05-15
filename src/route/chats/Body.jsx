@@ -11,17 +11,6 @@ import Error from "../../screens/Error.jsx";
 
 /**
  * @author VAMPETA
- * @brief PAGINA DE CONVERSAS
- * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
- * @param {Object} chat INFORMACOES GERAIS SOBRE O CHAT
-*/
-async function updateHumanViewed(socket, chat) {
-	if (chat.lastMessage.humanViewed) return ;
-	socket.emit("chats:update_human_viewed", { phone: chat.phone }, (res) => {});
-}
-
-/**
- * @author VAMPETA
  * @brief COMPONENTE QUE VERIFICA O TIPO DA MENSAGEM E RENDERIZA O ICONE CORRETO
  * @param {String} type TIPO DA MENSAGEM
 */
@@ -71,7 +60,7 @@ export default function Body({ socket }) {
 	return (
 		<div className="flex-1 overflow-y-auto px-1 animate-toastIn" ref={containerRef} onScroll={handleScroll}>
 			{chats.map((chat) => (
-				<Link className={`flex flex-col justify-center w-full h-20 my-3 px-6 ${(!chat.lastMessage.humanViewed) ? "bg-zinc-600" : "bg-zinc-900"} rounded border border-zinc-800 text-white hover:bg-orange-500 transition`} key={chat.phone} to={`/chat/${chat.phone}`} onClick={() => updateHumanViewed(socket, chat)}>
+				<Link className={`flex flex-col justify-center w-full h-20 my-3 px-6 ${(!chat.lastMessage.humanViewed) ? "bg-zinc-600" : "bg-zinc-900"} rounded border border-zinc-800 text-white hover:bg-orange-500 transition`} key={chat.phone} to={`/chat/${chat.phone}`}>
 					<div className="flex justify-between">
 						<p>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</p>
 						{!chat.lastMessage.humanViewed && <i className="bi bi-chat-left-dots" />}

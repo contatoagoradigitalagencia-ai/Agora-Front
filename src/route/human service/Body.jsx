@@ -46,12 +46,12 @@ export default function Body({ socket }) {
 		<div className="flex-1 overflow-y-auto px-1 animate-toastIn">
 			{chats.map((chat) => (
 				<div className="flex justify-between items-center w-full h-20 my-3 bg-zinc-900 rounded border border-zinc-800 text-white transition" key={chat.phone}>
-					<Link className="flex flex-col justify-center w-[70%] md:w-[80%] h-full px-6 gap-2 hover:bg-orange-500" to={`/chat/${chat.phone}`}>
+					<Link className="flex flex-col justify-center w-[60%] md:w-[80%] h-full px-6 gap-2 hover:bg-orange-500" to={`/chat/${chat.phone}`}>
 						<p>{chat.phone.replace(/^55(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3")}</p>
 						<span className="text-xs text-gray-400">{formatDate(chat.timestamp)}</span>
 					</Link>
-					<div className="flex flex-col justify-center items-center w-[30%] md:w-[20%] h-full px-6" onClick={() => removeWaitingService(socket, chat.phone, setChats)}>
-						<button className="w-full md:w-auto text-center px-6 py-2 bg-orange-500 text-black rounded-lg font-medium hover:bg-orange-400 transition cursor-pointer" to="/human-service">
+					<div className="flex flex-col justify-center items-center w-[40%] md:w-[20%] h-full px-6">
+						<button className="w-full md:w-auto text-center px-0 md:px-6 py-2 bg-orange-500 text-black rounded-lg font-medium hover:bg-orange-400 transition cursor-pointer" onClick={() => removeWaitingService(socket, chat.phone, setChats)}>
 							Encerrar
 						</button>
 					</div>
