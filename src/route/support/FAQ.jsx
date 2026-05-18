@@ -6,12 +6,12 @@ import { Link } from "react-router-dom";
 */
 export default function FAQ() {
 	return (
-		<div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 flex flex-col gap-4">
-			<div>
+		<div className="flex flex-col bg-zinc-900 border border-zinc-800 rounded-xl p-5 h-[500px]">
+			<div className="mb-4 shrink-0">
 				<h2 className="text-lg font-semibold">Perguntas frequentes</h2>
 				<p className="text-sm text-zinc-400">As dúvidas mais comuns dos usuários.</p>
 			</div>
-			<div className="flex flex-col gap-3">
+			<div className="flex flex-col gap-3 overflow-y-auto pr-1">
 				<div className="bg-zinc-800 border border-zinc-700 rounded-lg p-4">
 					<div className="flex items-center gap-2 mb-2">
 						<i className="bi bi-question-circle text-orange-500" />
