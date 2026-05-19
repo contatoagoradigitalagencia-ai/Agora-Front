@@ -1,3 +1,7 @@
+import { useGetInfoSupport } from "./useGetInfoSupport.js";
+
+import Load from "../../screens/Load.jsx";
+import Error from "../../screens/Error.jsx";
 import Status from "./Status.jsx";
 import Contact from "./Contact.jsx";
 import FAQ from "./FAQ.jsx";
@@ -7,14 +11,18 @@ import FAQ from "./FAQ.jsx";
  * @brief BODY DA ROTA /support
 */
 export default function Body({ socket }) {
+	const { support, setSupport, loading, error } = useGetInfoSupport(socket);
+
+	if (error) return (<Error />);
+	if (loading) return (<Load />);
 	return (
 		<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
-			<Status />
+			<Status support={support} />
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 				<Contact />
 				<FAQ />
 			</div>
-			<div className="flex flex-col gap-4 bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+			{/* <div className="flex flex-col gap-4 bg-zinc-900 border border-zinc-800 rounded-xl p-5">
 				<div>
 					<h2 className="text-lg font-semibold">Documentação e Guias</h2>
 					<p className="text-sm text-zinc-400">Acesse tutoriais e conteúdos para aprender a utilizar a plataforma.</p>
@@ -49,7 +57,7 @@ export default function Body({ socket }) {
 						<p className="text-sm text-zinc-400">Veja boas práticas de segurança e privacidade.</p>
 					</button>
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }
