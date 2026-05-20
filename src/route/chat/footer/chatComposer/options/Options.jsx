@@ -14,6 +14,24 @@ import { sendReadyMessage } from "./sendReadyMessage.js";
 
 /**
  * @author VAMPETA
+ * @brief BOTAO DE OPCAO
+ * @param {String} icon ICONE A SER USADO
+ * @param {String} label DESCRICAO DO BOTAO
+ * @param {Function} onClick FUNCAO A SER EXECUTADA
+*/
+function Option({ icon, label, onClick }) {
+	return (
+		<button className="flex flex-col items-center gap-2 cursor-pointer" onClick={onClick}>
+			<div className="h-20 w-20 bg-zinc-900 rounded-xl flex items-center justify-center hover:bg-zinc-700">
+				<i className={`bi ${icon} text-xl text-orange-500`} />
+			</div>
+			<span className="text-white text-sm">{label}</span>
+		</button>
+	);
+}
+
+/**
+ * @author VAMPETA
  * @brief IDENTIFICA O TIPO CERTO DA MENSAGEM
  * @param {Object} message MENSAGEM A SER RENDERIZADA
 */
@@ -45,26 +63,16 @@ export default function Options({ socket }) {
 	const { phone } = useParams();
 	const [type, setType] = useState(null);
 	const { messages } = useQuickMessages(socket, type);
-	const types = [
-		{ label: "Texto", value: "text", icon: "bi-chat-left-text" },
-		{ label: "Áudio", value: "audio", icon: "bi-mic" },
-		{ label: "Imagem", value: "image", icon: "bi-image" },
-		{ label: "Vídeo", value: "video", icon: "bi-film" },
-		{ label: "Localização", value: "location", icon: "bi-geo-alt" },
-		{ label: "Documento", value: "document", icon: "bi-file-earmark-text" }
-	];
 
 	return (
 		<div className="relative h-full">
 			<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 p-6 h-full place-content-center">
-				{types.map((t) => (
-					<button className="flex flex-col items-center gap-2 cursor-pointer" key={t.value} onClick={() => setType(t.value)}>
-						<div className="h-20 w-20 bg-zinc-900 rounded-xl flex items-center justify-center hover:bg-zinc-700">
-							<i className={`bi ${t.icon} text-xl text-orange-500`} />
-						</div>
-						<span className="text-white text-sm">{t.label}</span>
-					</button>
-				))}
+				<Option icon="bi-chat-left-text" label="Texto" onClick={() => setType("text")} />
+				<Option icon="bi-mic" label="Áudio" onClick={() => setType("audio")} />
+				<Option icon="bi-image" label="Imagem" onClick={() => setType("image")} />
+				<Option icon="bi-film" label="Vídeo" onClick={() => setType("video")} />
+				<Option icon="bi-geo-alt" label="Localização" onClick={() => setType("location")} />
+				<Option icon="bi-file-earmark-text" label="Documento" onClick={() => setType("document")} />
 			</div>
 			{type && (
 				<div className="fixed inset-0 z-50 flex flex-col items-center justify-center">
