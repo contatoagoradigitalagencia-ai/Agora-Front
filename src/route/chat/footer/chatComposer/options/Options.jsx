@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 
 import { useOverlay } from "../../../../../overlay/OverlayProvider.jsx";
 
+import AISuggestion from "./AISuggestion/AISuggestion.jsx";
 import QuickMessages from "./QuickMessages/QuickMessages.jsx";
 
 /**
@@ -26,14 +27,14 @@ function Option({ icon, label, onClick }) {
  * @author VAMPETA
  * @brief COMPONENTE RESPONSAVEL POR EXIBIR O MENU DE OPCOES
  * @param {Object} socket SOCKET DE CONEXAO COM O BACK END
-// */
+*/
 export default function Options({ socket }) {
 	const { phone } = useParams();
 	const { openModal } = useOverlay();
 
 	return (
 		<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 p-6 min-h-full">
-			<Option icon="bi-stars" label="IA" onClick={() => openModal("Sugestao de IA")} />
+			<Option icon="bi-stars" label="IA" onClick={() => openModal(<AISuggestion />)} />
 			<Option icon="bi-chat-left-text" label="Texto" onClick={() => openModal(<QuickMessages socket={socket} type="text" phone={phone} />)} />
 			<Option icon="bi-mic" label="Áudio" onClick={() => openModal(<QuickMessages socket={socket} type="audio" />)} phone={phone} />
 			<Option icon="bi-image" label="Imagem" onClick={() => openModal(<QuickMessages socket={socket} type="image" />)} phone={phone} />

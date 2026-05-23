@@ -7,11 +7,16 @@ const OverlayContext = createContext();
 
 /**
  * @author VAMPETA
- * @brief FECHA O OVERLAY
+ * @brief FECHA OVERLAY COM ANIMACAO
+ * @param {Function} setClosing FUNCAO QUE DEFINE O VALOR DE closing
  * @param {Function} setOverlay FUNCAO QUE DEFINE O VALOR DE overlay
 */
-function closeOverlay(setOverlay) {
-	setOverlay(null);
+function closeOverlay(setClosing, setOverlay) {
+	setClosing(true);
+	setTimeout(() => {
+		setOverlay(null);
+		setClosing(false);
+	}, 200);
 }
 
 /**
@@ -41,17 +46,18 @@ function openDrawer(setOverlay, component) {
 */
 export function OverlayProvider({ children }) {
 	const [overlay, setOverlay] = useState(null);
+	const [closing, setClosing] = useState(false);
 
 	return (
-		<OverlayContext.Provider value={{ openModal: (component) => openModal(setOverlay, component), openDrawer: (component) => openDrawer(setOverlay, component), closeOverlay: () => closeOverlay(setOverlay) }}>
+		<OverlayContext.Provider value={{ openModal: (component) => openModal(setOverlay, component), openDrawer: (component) => openDrawer(setOverlay, component), closeOverlay: () => closeOverlay(setClosing, setOverlay) }}>
 			{children}
 			{(overlay?.type === "modal") && (
-				<ModalOverlay onClose={() => closeOverlay(setOverlay)}>
+				<ModalOverlay onClose={() => closeOverlay(setClosing, setOverlay)} closing={closing}>
 					{overlay.content}
 				</ModalOverlay>
 			)}
 			{(overlay?.type === "drawer") && (
-				<DrawerOverlay onClose={() => closeOverlay(setOverlay)}>
+				<DrawerOverlay onClose={() => closeOverlay(setClosing, setOverlay)} closing={closing}>
 					{overlay.content}
 				</DrawerOverlay>
 			)}
