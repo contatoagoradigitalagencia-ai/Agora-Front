@@ -15,7 +15,7 @@ function handleImprove(socket, prompt, input, setOutput, setThink) {
 	setOutput("");
 	socket.emit("bot:prompt_suggestion", { prompt, input }, (res) => {
 		setThink(false);
-		if (!res || res.error) return;
+		if (!res || res.error) return ;
 		setOutput(res);
 	});
 }

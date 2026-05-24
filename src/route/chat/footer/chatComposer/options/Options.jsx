@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 
 import { useOverlay } from "../../../../../overlay/OverlayProvider.jsx";
 
-import AISuggestion from "./AISuggestion/AISuggestion.jsx";
+import IA from "./IA/IA.jsx";
 import QuickMessages from "./QuickMessages/QuickMessages.jsx";
 
 /**
@@ -14,8 +14,8 @@ import QuickMessages from "./QuickMessages/QuickMessages.jsx";
 */
 function Option({ icon, label, onClick }) {
 	return (
-		<button className="flex flex-col items-center gap-2 cursor-pointer" onClick={onClick}>
-			<div className="h-20 w-20 bg-zinc-900 rounded-xl flex items-center justify-center hover:bg-zinc-700">
+		<button className="flex flex-col items-center gap-2">
+			<div className="h-20 w-20 bg-zinc-900 rounded-xl flex items-center justify-center hover:bg-zinc-700 cursor-pointer" onClick={onClick}>
 				<i className={`bi ${icon} text-xl text-orange-500`} />
 			</div>
 			<span className="text-white text-sm">{label}</span>
@@ -34,7 +34,7 @@ export default function Options({ socket }) {
 
 	return (
 		<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-6 p-6 min-h-full">
-			<Option icon="bi-stars" label="IA" onClick={() => openModal(<AISuggestion />)} />
+			<Option icon="bi-stars" label="IA" onClick={() => openModal(<IA socket={socket} phone={phone} />)} />
 			<Option icon="bi-chat-left-text" label="Texto" onClick={() => openModal(<QuickMessages socket={socket} type="text" phone={phone} />)} />
 			<Option icon="bi-mic" label="Áudio" onClick={() => openModal(<QuickMessages socket={socket} type="audio" />)} phone={phone} />
 			<Option icon="bi-image" label="Imagem" onClick={() => openModal(<QuickMessages socket={socket} type="image" />)} phone={phone} />
