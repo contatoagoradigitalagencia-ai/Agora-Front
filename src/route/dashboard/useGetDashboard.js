@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 /**
  * @author VAMPETA
@@ -14,7 +15,7 @@ export function useGetDashboard(socket, date) {
 		if (!socket) return ;
 		setLoading(true);
 		socket.emit("dashboard:info", { date: date }, (res) => {
-			if (!res) return ;
+			if (!res || res.error) return (toast.error("Error ao carregar informações"));
 			setInfo(res);
 			setLoading(false);
 		});
