@@ -11,7 +11,7 @@ function handleNewMessage(setMessages, phone, socket) {
 	return ((newMessage) => {
 		if (newMessage.phone !== phone) return ;
 		setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]));
-		socket.emit("chats:update_human_viewed", { phone: newMessage.phone }, (res) => {});
+		socket.emit("chat:update_human_viewed", { phone: newMessage.phone }, (res) => {});
 	});
 }
 
