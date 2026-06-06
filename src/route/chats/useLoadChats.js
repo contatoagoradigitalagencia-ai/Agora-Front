@@ -14,8 +14,8 @@ export function useLoadChats(socket) {
 
 	useEffect(() => {
 		if (!socket) return ;
-		socket.emit("chats:load_chats", {}, (res) => {
-			if (!res || res.error) return (setError(true));
+		socket.emit("chats:load_chats", null, (res) => {
+			if (!res || res.code !== 200 || res.error) return (setError(true));
 			setChats(res.chats);
 			setHasMore(res.hasMore);
 			cursorRef.current = res.nextCursor;
@@ -25,10 +25,7 @@ export function useLoadChats(socket) {
 		if (!socket || loadingMore || !hasMore) return ;
 		setLoadingMore(true);
 		socket.emit("chats:load_chats", { dateLastChat: cursorRef.current }, (res) => {
-			if (!res || res.error || !Array.isArray(res.chats)) {
-				setLoadingMore(false);
-				return ;
-			}
+			if (!res || res.code !== 200 || res.error) return (setLoadingMore(false));
 			setChats((prev) => [...(prev ?? []), ...res.chats]);
 			setHasMore(res.hasMore);
 			cursorRef.current = res.nextCursor;

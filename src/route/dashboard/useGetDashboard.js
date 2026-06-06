@@ -15,7 +15,7 @@ export function useGetDashboard(socket, date) {
 		if (!socket) return ;
 		setLoading(true);
 		socket.emit("dashboard:info", { date: date }, (res) => {
-			if (!res || res.error) return (toast.error("Error ao carregar informações"));
+			if (!res || res.code !== 200 || res.error) return (toast.error("Error ao carregar informações"));
 			setInfo(res);
 			setLoading(false);
 		});

@@ -11,7 +11,7 @@ export function useGetInfoSupport(socket) {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		socket.emit("support:get_info_support", {}, (res) => {
+		socket.emit("support:get_info_support", null, (res) => {
 			if (!res || res.error) return (setError(true));
 			setSupport(res);
 			setLoading(false);

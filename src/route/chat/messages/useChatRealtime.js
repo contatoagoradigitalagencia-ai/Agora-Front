@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 /**
  * @author VAMPETA
@@ -11,7 +12,9 @@ function handleNewMessage(setMessages, phone, socket) {
 	return ((newMessage) => {
 		if (newMessage.phone !== phone) return ;
 		setMessages((prev) => ((prev) ? [...prev, newMessage] : [newMessage]));
-		socket.emit("chat:update_human_viewed", { phone: newMessage.phone }, (res) => {});
+		socket.emit("chat:update_human_viewed", { phone: newMessage.phone }, (res) => {
+			if (res.code !== 204) toast.error("Erro no evento chat:update_human_viewed");
+		});
 	});
 }
 

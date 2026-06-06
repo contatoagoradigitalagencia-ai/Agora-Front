@@ -12,7 +12,7 @@ export function useGetContacts(socket) {
 
     useEffect(() => {
         if (!socket) return ;
-        socket.emit("contacts:load_contacts", {}, (res) => {
+        socket.emit("contacts:load_contacts", null, (res) => {
             if (!res || res.error) return (setError(true));
             setContacts(res);
             setLoading(false);
