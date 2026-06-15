@@ -13,8 +13,8 @@ export function useGetQuickMessage(socket, type) {
 
 	useEffect(() => {
 		socket.emit("quick-messages:get_quick_messages", { type: type }, (res) => {
-			if (!res || res.error) return (setError(true));
-			setMessages(res);
+			if (!res || res.code !== 200 || res.error) return (setError(true));
+			setMessages(res.messages);
 			setLoading(false);
 		});
 	}, [socket]);

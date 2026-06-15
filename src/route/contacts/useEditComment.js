@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 /**
  * @author VAMPETA
@@ -27,7 +28,9 @@ export function useEditComment(contact) {
  */
 export function handleSave(socket, phone, comment, setEditing, setContact) {
 	socket.emit("contacts:save_comment", { phone: phone, comment: comment }, (res) => {
-		if (res === 200) setContact((prev) => ({ ...prev, comment: comment }));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao salvar comentário!"));
+		setContact((prev) => ({ ...prev, comment: comment }));
 		setEditing(false);
+		toast.success("Comentário salvo!");
 	});
 }

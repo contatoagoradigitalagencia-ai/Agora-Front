@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 async function removeWaitingService(socket, contact, setContact) {
 	if (!socket) return ;
 	socket.emit("human-service:remove_waiting_service", { phone: contact.phone }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao remover contato da lista de espera para atendimento!"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao remover contato da lista de espera para atendimento!"));
 		setContact((prev) => ({ ...prev, humanService: { ...prev.humanService, waiting: false } }));
 		toast.success("Contato removido da lista de espera de atendimento!");
 	});
