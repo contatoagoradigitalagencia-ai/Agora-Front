@@ -140,7 +140,7 @@ export function handleDelete(socket, id, setMessages, setSelectedMessage, setVie
 		return (toast.success("Mensagem deletada!"));
 	}
 	socket.emit("quick-messages:delete_quick_message", { id: id }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao deletar mensagem!"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao deletar mensagem!"));
 		setMessages((prev) => (prev.filter((m) => (m.id !== id))));
 		setSelectedMessage(null);
 		setView("list");
@@ -221,7 +221,7 @@ async function processMessage(selected) {
 export async function handleSave(socket, selected, setMessages, setSelectedMessage, setView) {
 	await processMessage(selected);
 	socket.emit("quick-messages:save_quick_message", { id: (selected.isNew) ? undefined : selected.id, name: selected.name, message: selected.message }, (res) => {
-		if (!res || res.error) return (toast.error("Erro ao salvar mensagem!"));
+		if (!res || res.code !== 200 || res.error) return (toast.error("Erro ao salvar mensagem!"));
 		setMessages((prev) => {
 			if (selected.isNew) return ([{ ...selected, id: res.id, isNew: false }, ...prev.filter((m) => (m.id !== selected.id))]);
 			return (prev.map((msg) => ((msg.id === selected.id) ? { ...msg, ...selected, id: res.id } : msg)));
