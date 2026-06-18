@@ -12,7 +12,7 @@ export function useGetInfoBot(socket) {
 
 	useEffect(() => {
 		socket.emit("bot:get_info_bot", {}, (res) => {
-			if (!res || res.error) return (setError(true));
+			if (!res || res.code !== 200 || res.error) return (setError(true));
 			setBot(res);
 			setLoading(false);
 		});
