@@ -40,7 +40,7 @@ export function handleSave(socket, fields) {
 	const prompt = buildPrompt(fields.filter((f) => (f.trim() !== "")));
 
 	socket.emit("bot:update_prompt", { prompt: prompt }, (res) => {
-		if (res !== 204) return (toast.error("Erro ao salvar!"));
+		if (!res || res.code !== 204 || res.error) return (toast.error("Erro ao salvar!"));
 		toast.success("Salvo com sucesso!");
 	});
 }

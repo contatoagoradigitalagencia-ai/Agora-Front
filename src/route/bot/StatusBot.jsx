@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 */
 function updateStatusBot(socket, status, setStatus) {
 	socket.emit("bot:update_status_bot", { status: !status }, (res) => {
-		if (res !== 204) return (toast.error(`Erro ao ${(!status) ? "ativar" : "desativar"} o bot!`));
+		if (!res || res.code !== 204 || res.error) return (toast.error(`Erro ao ${(!status) ? "ativar" : "desativar"} o bot!`));
 		setStatus(!status);
 		toast.success(`Bot ${(!status) ? "ativado" : "desativado"} com sucesso!`);
 	});

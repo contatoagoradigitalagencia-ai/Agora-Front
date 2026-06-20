@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 */
 function updateVisualization(socket, visualization, setVisualization) {
 	socket.emit("bot:update_status_visualization", { visualization: !visualization }, (res) => {
-		if (res !== 204) return (toast.error(`Erro ao ${(!visualization) ? "ativar" : "desativar"} a visualização do bot!`));
+		if (!res || res.code !== 204 || res.error) return (toast.error(`Erro ao ${(!visualization) ? "ativar" : "desativar"} a visualização do bot!`));
 		setVisualization(!visualization);
 		toast.success(`Visualização ${(!visualization) ? "ativada" : "desativada"} com sucesso!`);
 	});
