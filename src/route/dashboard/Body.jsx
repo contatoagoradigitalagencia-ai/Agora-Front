@@ -5,6 +5,7 @@ import { useGetDashboard } from "./useGetDashboard.js";
 
 import DateSelector from "./DateSelector.jsx";
 import Metrics from "./Metrics.jsx"
+import Graphic from "./Graphic.jsx";
 import Shortcuts from "./Shortcuts.jsx"
 import Messages from "./Messages.jsx"
 
@@ -20,6 +21,7 @@ export default function Body({ socket }) {
 		<div className="flex flex-col gap-6 p-4 md:p-6 overflow-y-auto animate-toastIn">
 			<DateSelector date={date} setDate={setDate} />
 			<Metrics loading={loading} info={info} />
+			<Graphic loading={loading} info={info} />
 			<Shortcuts />
 			<Messages loading={loading} info={info} />
 		</div>
